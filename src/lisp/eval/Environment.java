@@ -9,20 +9,14 @@ import java.util.Map;
  *
  */
 public class Environment {
-	//private final Map<Symbol, SExpression> frame = new HashMap<>();
+	private final Map<Symbol, SExpression> frame = new HashMap<>();
 	
-	//private final Environment next;
-	/*
+	private final Environment next;
+	
 	public Environment(Environment next) {
 		this.next = next;
 	}
-	*/
 	
-	public Environment() {
-		
-	}
-	
-	/*
 	private static Environment find(Environment environment, Symbol key) {
 		for(Environment e = environment; e != null; e=e.next) {
 			if(e.frame.containsKey(key)) {
@@ -45,6 +39,5 @@ public class Environment {
 		frame.put(key, value);
 		return value;
 	}
-	*/
 	
 }

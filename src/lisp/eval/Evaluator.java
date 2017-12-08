@@ -17,6 +17,13 @@ public class Evaluator {
 		if(sexp instanceof Int) {
 			return sexp;
 		}
+		//sexpが記号の時
+		if(sexp instanceof Symbol) {
+			//現在の環境のフレームにあるかどうか
+			//フレームにあればおｋ
+			//フレームになければエラー
+			env.get((Symbol)sexp);
+		}
 		return sexp;
 	}
 }

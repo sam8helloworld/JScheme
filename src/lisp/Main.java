@@ -34,7 +34,7 @@ public class Main {
 		
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		Reader reader = new Reader(bufferedReader);
-		Environment environment = new Environment();
+		Environment environment = new Environment(null);
 		
 		try {
 			while(true) {
