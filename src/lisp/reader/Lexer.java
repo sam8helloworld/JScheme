@@ -119,8 +119,7 @@ public class Lexer {
 	 * @throws SyntaxErrorException
 	 * @throws IOException
 	 */
-	public Token getNextToken() throws IOException, LispException{
-		
+	public Token getNextToken() throws IOException, LispException {
 		char ch = this.nextChar;
 		while(isWhiteSpaceChar(ch)) {
 			updateNextChar();

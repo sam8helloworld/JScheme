@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import lisp.eval.Environment;
+import lisp.eval.Evaluator;
 import lisp.eval.SExpression;
 import lisp.exception.EndOfFileException;
 import lisp.exception.LispException;
@@ -32,14 +34,15 @@ public class Main {
 		
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		Reader reader = new Reader(bufferedReader);
-		//TODO:Environment environment = new Environment();
+		Environment environment = new Environment();
 		
 		try {
 			while(true) {
 				try {
 					System.out.print("lisp> ");
 					SExpression exp = reader.read();
-					System.out.println(exp);
+					SExpression value = Evaluator.eval(exp, environment);
+					System.out.println(value);
 				} catch (EndOfFileException e) {
 					break;
 				} catch (LispException e) {
