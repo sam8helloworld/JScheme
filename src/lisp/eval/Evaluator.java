@@ -17,12 +17,33 @@ public class Evaluator {
 		if(sexp instanceof Int) {
 			return sexp;
 		}
+		
 		//sexpが記号の時
 		if(sexp instanceof Symbol) {
-			//現在の環境のフレームにあるかどうか
-			//フレームにあればおｋ
-			//フレームになければエラー
-			env.get((Symbol)sexp);
+			/*
+			 * 現在の環境のフレームにあるかどうか確認
+			 * フレームになければエラー
+			 * フレームにあれば対応するS式を返す
+			 * 手続きが返された場合はListでないのでエラー
+			 */
+			SExpression symbolExpression = env.get((Symbol)sexp);
+			env.define((Symbol)sexp, sexp);//テスト用
+			return env.get((Symbol)sexp);
+		}
+		
+		//sexpがConsCellの時
+		if(sexp instanceof ConsCell) {
+			/*
+			 * ConsCellの場合
+			 * (A . B)
+			 * (+ 1 2)
+			 * などの括弧を使ったほぼすべての式の可能性がある
+			 * carは命令かアトム
+			 */
+			//
+			if(((ConsCell) sexp).getCar() instanceof SpecialForm) {
+				((SpecialForm)sexp).apply(((ConsCell) sexp).getCdr(), env);
+			}
 		}
 		return sexp;
 	}

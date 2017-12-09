@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 
 import lisp.eval.Environment;
 import lisp.eval.Evaluator;
+import lisp.eval.Quote;
 import lisp.eval.SExpression;
+import lisp.eval.Symbol;
 import lisp.exception.EndOfFileException;
 import lisp.exception.LispException;
 import lisp.reader.Reader;
@@ -35,6 +37,8 @@ public class Main {
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		Reader reader = new Reader(bufferedReader);
 		Environment environment = new Environment(null);
+		
+		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		
 		try {
 			while(true) {

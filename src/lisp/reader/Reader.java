@@ -82,6 +82,7 @@ public class Reader {
 		if (this.token.getKind() == Token.Kind.LEFTPAR) {
 			this.nestingLevel++;
 			this.token = this.lexer.getNextToken();
+			
 			// 空リスト
 			if (this.token.getKind() == Token.Kind.RIGHTPAR) {
 				this.nestingLevel--;
@@ -90,6 +91,7 @@ public class Reader {
 				}
 				return EmptyList.getInstance();
 			}
+			
 			// car
 			SExpression car = sExpression();
 			// '.'
@@ -97,6 +99,7 @@ public class Reader {
 				throw new SyntaxErrorException("'.' expected but " + this.token.getKind());
 			}
 			this.token = this.lexer.getNextToken();
+			
 			// cdr
 			SExpression cdr = sExpression();
 			if (this.token.getKind() != Token.Kind.RIGHTPAR) {
