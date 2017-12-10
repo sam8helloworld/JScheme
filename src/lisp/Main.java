@@ -4,12 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import lisp.eval.Add;
 import lisp.eval.Car;
 import lisp.eval.Environment;
 import lisp.eval.Evaluator;
 import lisp.eval.List;
 import lisp.eval.Quote;
 import lisp.eval.SExpression;
+import lisp.eval.Sub;
 import lisp.eval.Symbol;
 import lisp.exception.EndOfFileException;
 import lisp.exception.LispException;
@@ -43,6 +45,8 @@ public class Main {
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("car"), Car.getInstance());
 		environment.define(Symbol.getInstance("list"), List.getInstance());
+		environment.define(Symbol.getInstance("+"), Add.getInstance());
+		environment.define(Symbol.getInstance("-"), Sub.getInstance());
 		try {
 			while(true) {
 				try {

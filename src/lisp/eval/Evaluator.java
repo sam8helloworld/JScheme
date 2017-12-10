@@ -31,6 +31,11 @@ public class Evaluator {
 			return env.get((Symbol)sexp);
 		}
 		
+		// sexpが空リストの時
+		if(sexp instanceof EmptyList) {
+			return sexp;
+		}
+		
 		//sexpがConsCellの時
 		if(sexp instanceof ConsCell) {
 			/*
@@ -40,14 +45,23 @@ public class Evaluator {
 			 * などの括弧を使ったほぼすべての式の可能性がある
 			 * carは命令かアトム
 			 */
-			SExpression car = eval(((ConsCell) sexp).getCar(), env);
+			SExpression car = ((ConsCell) sexp).getCar();
+			SExpression cdr = ((ConsCell) sexp).getCdr();
+			
+			if(!(cdr instanceof EmptyList)) {
+				cdr = eval(cdr, env);
+			}
+			car = eval(car, env);
+			//System.out.println(car);
 			if(car instanceof SpecialForm) {
 				return ((SpecialForm)car).apply(((ConsCell) sexp).getCdr(), env);
 			}
 			
-			if(car instanceof Subroutine) {
+			if(car instanceof Subroutine) { 
 				return ((Subroutine)car).apply(((ConsCell) sexp).getCdr(), env);
 			}
+			((ConsCell) sexp).setCar(car);
+			((ConsCell) sexp).setCdr(cdr);
 		}
 		return sexp;
 	}
