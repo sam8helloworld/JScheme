@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 
 import lisp.eval.Add;
 import lisp.eval.Car;
+import lisp.eval.Cdr;
 import lisp.eval.Environment;
 import lisp.eval.Evaluator;
 import lisp.eval.List;
@@ -44,6 +45,7 @@ public class Main {
 		
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("car"), Car.getInstance());
+		environment.define(Symbol.getInstance("cdr"), Cdr.getInstance());
 		environment.define(Symbol.getInstance("list"), List.getInstance());
 		environment.define(Symbol.getInstance("+"), Add.getInstance());
 		environment.define(Symbol.getInstance("-"), Sub.getInstance());
