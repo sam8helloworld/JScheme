@@ -16,6 +16,14 @@ public class ConsCell implements SExpression{
 		return this.cdr;
 	}
 	
+	public void setCar(SExpression sexp) {
+		this.car = sexp;
+	}
+	
+	public void setCdr(SExpression sexp) {
+		this.cdr = sexp;
+	}
+	
 	public static ConsCell getInstance(SExpression car, SExpression cdr) {
 		return new ConsCell(car, cdr);
 	}

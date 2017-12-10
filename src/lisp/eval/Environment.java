@@ -9,25 +9,27 @@ import java.util.Map;
  *
  */
 public class Environment {
-	private final Map<Symbol, SExpression> frame = new HashMap<>();
+	private Map<Symbol, SExpression> frame = new HashMap<>();
 	
-	private final Environment next;
+	//private Environment next;
 	
 	public Environment(Environment next) {
-		this.next = next;
+		//this.next = next;
 	}
 	
 	private static Environment find(Environment environment, Symbol key) {
-		for(Environment e = environment; e != null; e=e.next) {
-			if(e.frame.containsKey(key)) {
-				return e;
-			}
-		}
+//		for(Environment e = environment; e != null; e=e.next) {
+//			if(e.frame.containsKey(key)) {
+//				return e;
+//			}
+//		}
+		//return this;
 		throw new RuntimeException("Variable " + key + " not found");
 	}
 	
 	public SExpression get(Symbol key) {
-		return find(this, key).frame.get(key);
+		//return find(this, key).frame.get(key);
+		return frame.get(key);
 	}
 	
 	public SExpression set(Symbol key, SExpression value) {

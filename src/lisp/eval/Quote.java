@@ -8,10 +8,8 @@ package lisp.eval;
 public class Quote implements SpecialForm {
 	private static final Quote quote = new Quote();
 	public SExpression apply(SExpression sexp, Environment environment) {
-		//TODO:quote
-		if(sexp instanceof ConsCell) {
-			((ConsCell) sexp).getCar();
-		}
+		// quote 
+		// 評価せずにそのまま返す
 		return sexp;
 	}
 	

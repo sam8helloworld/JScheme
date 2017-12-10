@@ -27,7 +27,7 @@ public class Evaluator {
 			 * 手続きが返された場合はListでないのでエラー
 			 */
 			SExpression symbolExpression = env.get((Symbol)sexp);
-			env.define((Symbol)sexp, sexp);//テスト用
+			//env.define((Symbol)sexp, sexp);//テスト用
 			return env.get((Symbol)sexp);
 		}
 		
@@ -40,9 +40,13 @@ public class Evaluator {
 			 * などの括弧を使ったほぼすべての式の可能性がある
 			 * carは命令かアトム
 			 */
-			//
-			if(((ConsCell) sexp).getCar() instanceof SpecialForm) {
-				((SpecialForm)sexp).apply(((ConsCell) sexp).getCdr(), env);
+			SExpression car = eval(((ConsCell) sexp).getCar(), env);
+			if(car instanceof SpecialForm) {
+				return ((SpecialForm)car).apply(((ConsCell) sexp).getCdr(), env);
+			}
+			
+			if(car instanceof Subroutine) {
+				return ((Subroutine)car).apply(((ConsCell) sexp).getCdr(), env);
 			}
 		}
 		return sexp;

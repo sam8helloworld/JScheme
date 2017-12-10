@@ -5,28 +5,16 @@ package lisp.eval;
  * @author sam0830
  *
  */
-public class List implements SExpression {
-	private SExpression car;
-	private SExpression cdr;
-
-	public SExpression getCar() {
-		return this.car;
-	}
-	public SExpression getCdr() {
-		return this.cdr;
+public class List implements Subroutine {
+	private static final List list = new List();
+	public SExpression apply(SExpression sexp, Environment environment) {
+		// list
+		return sexp;
+		//throw new RuntimeException("*** ERROR: pair required, but got "+sexp);
 	}
 	
-	public static List getInstance(SExpression car, SExpression cdr) {
-		return new List(car, cdr);
-	}
 	
-	private List(SExpression car, SExpression cdr) {
-		this.car = car;
-		this.cdr = cdr;
-	}
-	
-	@Override
-	public String toString() {
-		return "(" + this.car + " " + this.cdr + ")";
+	public static List getInstance() {
+		return list;
 	}
 }

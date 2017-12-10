@@ -2,6 +2,8 @@ package lisp.reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import lisp.eval.Bool;
 import lisp.eval.ConsCell;
@@ -78,38 +80,55 @@ public class Reader {
 			return Bool.valueOf(value);
 		}
 		
-		// '(' ')' or '(' <S式> . <S式> ')'
+		// '(' ')' or '(' <S式> . <S式> ')' or '(' <S式> <S式> ...<S式> ')'
 		if (this.token.getKind() == Token.Kind.LEFTPAR) {
 			this.nestingLevel++;
 			this.token = this.lexer.getNextToken();
 			
-			// 空リスト
-			if (this.token.getKind() == Token.Kind.RIGHTPAR) {
-				this.nestingLevel--;
-				if (this.nestingLevel != 0) { // 式が未完成
-					this.token = this.lexer.getNextToken();
+			List<SExpression> sList = new ArrayList<SExpression>();
+			while(true) {
+				// 右括弧
+				if (this.token.getKind() == Token.Kind.RIGHTPAR) {
+					this.nestingLevel--;
+					if (this.nestingLevel != 0) { // 式が未完成
+						this.token = this.lexer.getNextToken();
+					}
+					// 空リスト
+					if(sList.isEmpty()) {
+						return EmptyList.getInstance();
+					}
+					// リスト
+					ConsCell consCell = ConsCell.getInstance(sList.remove(0), EmptyList.getInstance());
+					ConsCell tmp = consCell;
+					//TODO:sList走査
+					for(SExpression sexp : sList) {
+							tmp.setCdr(ConsCell.getInstance(sexp, EmptyList.getInstance()));
+							tmp = (ConsCell) tmp.getCdr();
+					}
+					return consCell;
 				}
-				return EmptyList.getInstance();
+				
+				// car
+				SExpression car = sExpression();
+				
+				// ドット対
+				if (this.token.getKind() == Token.Kind.DOT) {
+					this.token = this.lexer.getNextToken();
+					// cdr
+					SExpression cdr = sExpression();
+					if (this.token.getKind() != Token.Kind.RIGHTPAR) {
+						throw new SyntaxErrorException("')' expected");
+					}
+					this.nestingLevel--;
+					if (this.nestingLevel != 0) { // 式が未完成
+						this.token = this.lexer.getNextToken();
+					}
+					return ConsCell.getInstance(car, cdr);
+				}
+				sList.add(car);
 			}
 			
-			// car
-			SExpression car = sExpression();
-			// '.'
-			if (this.token.getKind() != Token.Kind.DOT) {
-				throw new SyntaxErrorException("'.' expected but " + this.token.getKind());
-			}
-			this.token = this.lexer.getNextToken();
 			
-			// cdr
-			SExpression cdr = sExpression();
-			if (this.token.getKind() != Token.Kind.RIGHTPAR) {
-				throw new SyntaxErrorException("')' expected");
-			}
-			this.nestingLevel--;
-			if (this.nestingLevel != 0) { // 式が未完成
-				this.token = this.lexer.getNextToken();
-			}
-			return ConsCell.getInstance(car, cdr);
 		}
 		
 		throw new SyntaxErrorException("Invalid expression:" + this.token.getKind());

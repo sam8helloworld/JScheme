@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import lisp.eval.Car;
 import lisp.eval.Environment;
 import lisp.eval.Evaluator;
+import lisp.eval.List;
 import lisp.eval.Quote;
 import lisp.eval.SExpression;
 import lisp.eval.Symbol;
@@ -39,7 +41,8 @@ public class Main {
 		Environment environment = new Environment(null);
 		
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
-		
+		environment.define(Symbol.getInstance("car"), Car.getInstance());
+		environment.define(Symbol.getInstance("list"), List.getInstance());
 		try {
 			while(true) {
 				try {
