@@ -36,6 +36,12 @@ public class Main {
 		System.out.println(" |______|_|___/ .__/ ");
 		System.out.println("              | |    ");
 		System.out.println("              |_|    ");
+		
+		System.out.println("Welcome to Lisp by sam0830 [version1.0.0] (2017/12/31) <https://github.com/sam0830/LispInterpriter>");
+		System.out.println("");
+		System.out.println("CopyRight (c) [sam0830] 2017");
+		System.out.println("");
+		System.out.println("Type :h and hit Enter for context help.");
 	}
 
 	public static void main(String[] args) throws IOException {
