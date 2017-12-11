@@ -1,7 +1,7 @@
 package lisp.eval;
 
 /**
- * List
+ * Define
  * @author sam0830
  *
  */
@@ -10,10 +10,10 @@ public class Define implements SpecialForm {
 	public SExpression apply(SExpression sexp, Environment environment) {
 		SExpression s1 = ((ConsCell)sexp).getCar();
 		SExpression s2 = ((ConsCell)((ConsCell)sexp).getCdr()).getCar();
-		environment.define(Symbol.getInstance(((Symbol)s1).getName()), s2);
+		SExpression s2Result = Evaluator.eval(s2, environment);
+		environment.define(Symbol.getInstance(s1.toString()), s2Result);
 		return Symbol.getInstance((((ConsCell)sexp).getCar()).toString());
 	}
-	
 	
 	public static Define getInstance() {
 		return define;

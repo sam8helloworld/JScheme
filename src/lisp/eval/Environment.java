@@ -11,29 +11,23 @@ import java.util.Map;
 public class Environment {
 	private Map<Symbol, SExpression> frame = new HashMap<>();
 	
-	//private Environment next;
+	private Environment next;
 	
 	public Environment(Environment next) {
-		//this.next = next;
+		this.next = next;
 	}
 	
 	private static Environment find(Environment environment, Symbol key) {
-//		for(Environment e = environment; e != null; e=e.next) {
-//			if(e.frame.containsKey(key)) {
-//				return e;
-//			}
-//		}
-		//return this;
+		for(Environment e = environment; e != null; e=e.next) {
+			if(e.frame.containsKey(key)) {
+				return e;
+			}
+		}
 		throw new RuntimeException("Variable " + key + " not found");
 	}
 	
 	public SExpression get(Symbol key) {
-		//return find(this, key).frame.get(key);
-		SExpression sexp= frame.get(key);
-		if(sexp == null) {
-			return key;
-		}
-		return sexp;
+		return find(this, key).frame.get(key);
 	}
 	
 	public SExpression set(Symbol key, SExpression value) {

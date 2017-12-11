@@ -10,6 +10,7 @@ import lisp.eval.Cdr;
 import lisp.eval.Define;
 import lisp.eval.Environment;
 import lisp.eval.Evaluator;
+import lisp.eval.Lambda;
 import lisp.eval.List;
 import lisp.eval.Quote;
 import lisp.eval.SExpression;
@@ -51,6 +52,7 @@ public class Main {
 		environment.define(Symbol.getInstance("+"), Add.getInstance());
 		environment.define(Symbol.getInstance("-"), Sub.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
+		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
 		try {
 			while(true) {
 				try {

@@ -36,6 +36,7 @@ public class Evaluator {
 			return sexp;
 		}
 		
+		
 		//sexpがConsCellの時
 		if(sexp instanceof ConsCell) {
 			/*
@@ -48,18 +49,31 @@ public class Evaluator {
 			SExpression car = ((ConsCell) sexp).getCar();
 			SExpression cdr = ((ConsCell) sexp).getCdr();
 			
+			// 特殊形式(引数を評価しない)
+			// defineは第一引数を評価せず、第二引数を評価して第一引数にセットする
+			// 参考URL: http://www.geocities.jp/m_hiroi/func/abcscm02.html
+			if(eval(car, env) instanceof SpecialForm) {
+				return ((SpecialForm)eval(car, env)).apply(((ConsCell) sexp).getCdr(), env);
+			}
+			
 			if(!(cdr instanceof EmptyList)) {
 				cdr = eval(cdr, env);
 			}
+			
 			car = eval(car, env);
-			//System.out.println(car);
-			if(car instanceof SpecialForm) {
-				return ((SpecialForm)car).apply(((ConsCell) sexp).getCdr(), env);
+			
+			
+			// carがクロージャ(/Closure)の時
+			if(car instanceof Closure) {
+				return ((Closure)car).apply(((ConsCell) sexp).getCdr(), env);
 			}
 			
+			// 組み込み形式
 			if(car instanceof Subroutine) { 
 				return ((Subroutine)car).apply(((ConsCell) sexp).getCdr(), env);
 			}
+			
+			
 			((ConsCell) sexp).setCar(car);
 			((ConsCell) sexp).setCdr(cdr);
 		}
