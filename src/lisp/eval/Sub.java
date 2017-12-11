@@ -9,8 +9,8 @@ public class Sub implements Subroutine{
 	private static final Sub sub = new Sub();
 	
 	public SExpression apply(SExpression sexp, Environment environment) {
-		Integer num = 0;
-		SExpression s = sexp;
+		Integer num = ((Int)((ConsCell)sexp).getCar()).getValue();
+		SExpression s = ((ConsCell)sexp).getCdr();
 		while(true) {
 			if(((ConsCell)s).getCdr() instanceof EmptyList) {
 				num -= ((Int)((ConsCell)s).getCar()).getValue();
