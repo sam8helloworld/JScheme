@@ -10,7 +10,7 @@ public class Quote implements SpecialForm {
 	public SExpression apply(SExpression sexp, Environment environment) {
 		// quote 
 		// 評価せずにそのまま返す
-		return sexp;
+		return ((ConsCell)sexp).getCar();
 	}
 	
 	
