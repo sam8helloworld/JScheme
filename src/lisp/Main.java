@@ -12,6 +12,7 @@ import lisp.eval.Environment;
 import lisp.eval.Evaluator;
 import lisp.eval.Lambda;
 import lisp.eval.List;
+import lisp.eval.Multiply;
 import lisp.eval.Quote;
 import lisp.eval.SExpression;
 import lisp.eval.Sub;
@@ -57,6 +58,7 @@ public class Main {
 		environment.define(Symbol.getInstance("list"), List.getInstance());
 		environment.define(Symbol.getInstance("+"), Add.getInstance());
 		environment.define(Symbol.getInstance("-"), Sub.getInstance());
+		environment.define(Symbol.getInstance("*"), Multiply.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
 		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
 		try {
