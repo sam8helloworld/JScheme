@@ -12,7 +12,7 @@ public class Car implements Subroutine {
 		// ConsCellが渡されなければエラー
 		// ConsCellが渡されてていればcarを返す
 		if(sexp instanceof ConsCell) {
-			return ((ConsCell) sexp).getCar();
+			return ((ConsCell)((ConsCell) sexp).getCar()).getCar();
 		}
 		throw new RuntimeException("*** ERROR: pair required, but got "+sexp);
 	}

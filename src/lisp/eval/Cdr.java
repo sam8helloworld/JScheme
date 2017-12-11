@@ -12,7 +12,7 @@ public class Cdr implements Subroutine {
 		// ConsCellが渡されなければエラー
 		// ConsCellが渡されてていればcarを返す
 		if(sexp instanceof ConsCell) {
-			return ((ConsCell) sexp).getCdr();
+			return ((ConsCell)((ConsCell) sexp).getCar()).getCdr();
 		}
 		throw new RuntimeException("*** ERROR: pair required, but got "+sexp);
 	}
