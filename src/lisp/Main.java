@@ -8,6 +8,7 @@ import lisp.eval.Add;
 import lisp.eval.Car;
 import lisp.eval.Cdr;
 import lisp.eval.Define;
+import lisp.eval.Divide;
 import lisp.eval.Environment;
 import lisp.eval.Evaluator;
 import lisp.eval.Lambda;
@@ -59,6 +60,7 @@ public class Main {
 		environment.define(Symbol.getInstance("+"), Add.getInstance());
 		environment.define(Symbol.getInstance("-"), Sub.getInstance());
 		environment.define(Symbol.getInstance("*"), Multiply.getInstance());
+		environment.define(Symbol.getInstance("/"), Divide.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
 		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
 		try {
