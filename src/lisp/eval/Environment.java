@@ -29,7 +29,11 @@ public class Environment {
 	
 	public SExpression get(Symbol key) {
 		//return find(this, key).frame.get(key);
-		return frame.get(key);
+		SExpression sexp= frame.get(key);
+		if(sexp == null) {
+			return key;
+		}
+		return sexp;
 	}
 	
 	public SExpression set(Symbol key, SExpression value) {
