@@ -12,6 +12,7 @@ import lisp.eval.Define;
 import lisp.eval.Divide;
 import lisp.eval.Environment;
 import lisp.eval.Evaluator;
+import lisp.eval.Exit;
 import lisp.eval.Lambda;
 import lisp.eval.List;
 import lisp.eval.Multiply;
@@ -54,7 +55,6 @@ public class Main {
 		Reader reader = new Reader(bufferedReader);
 		Environment environment = new Environment(null);
 		
-		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("car"), Car.getInstance());
 		environment.define(Symbol.getInstance("cdr"), Cdr.getInstance());
 		environment.define(Symbol.getInstance("list"), List.getInstance());
@@ -63,6 +63,8 @@ public class Main {
 		environment.define(Symbol.getInstance("-"), Sub.getInstance());
 		environment.define(Symbol.getInstance("*"), Multiply.getInstance());
 		environment.define(Symbol.getInstance("/"), Divide.getInstance());
+		environment.define(Symbol.getInstance("exit"), Exit.getInstance());
+		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
 		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
 		try {
