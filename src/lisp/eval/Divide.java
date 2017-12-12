@@ -9,14 +9,14 @@ public class Divide implements Subroutine {
  private static final Divide divide = new Divide();
 	
 	public SExpression apply(SExpression sexp, Environment environment) {
-		java.lang.Double num = ((lisp.eval.Double)((ConsCell)sexp).getCar()).getValue();
-		SExpression s = sexp;
+		java.lang.Double num = (((Int)((ConsCell)sexp).getCar()).getValue()).doubleValue();
+		SExpression s = ((ConsCell)sexp).getCdr();
 		while(true) {
 			if(((ConsCell)s).getCdr() instanceof EmptyList) {
-				num /= ((lisp.eval.Double)((ConsCell)s).getCar()).getValue();
+				num /= (((Int)((ConsCell)s).getCar()).getValue()).doubleValue();
 				break;
 			}
-			num /= ((lisp.eval.Double)((ConsCell)s).getCar()).getValue();
+			num /= (((Int)((ConsCell)s).getCar()).getValue()).doubleValue();
 			s = ((ConsCell)s).getCdr(); 
 		}
 		return lisp.eval.Double.valueOf(num);
