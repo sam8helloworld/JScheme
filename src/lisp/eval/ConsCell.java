@@ -24,6 +24,26 @@ public class ConsCell implements SExpression {
 		this.cdr = sexp;
 	}
 	
+	public SExpression get(int n) {
+		if(n==0) {
+			return this.car;
+		}
+		if(this.cdr instanceof EmptyList) {
+			return EmptyList.getInstance();
+		}
+		return ((ConsCell)this.cdr).get(n-1);
+	}
+	
+	public int getSize() {
+		int size = 0;
+		SExpression sexp = this;
+		while(!(sexp instanceof EmptyList)) {
+			size++;
+			sexp = ((ConsCell)sexp).getCdr();
+		}
+		return size;
+	}
+	
 	public static ConsCell getInstance(SExpression car, SExpression cdr) {
 		return new ConsCell(car, cdr);
 	}

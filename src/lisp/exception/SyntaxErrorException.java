@@ -2,7 +2,7 @@ package lisp.exception;
 
 /**
  * 構文上の誤りを表す例外
- * @author tetsuya
+ * @author sam0830
  *
  */
 @SuppressWarnings("serial")

@@ -6,6 +6,15 @@ package lisp.eval;
  *
  */
 public class Evaluator {
+	
+	private static SExpression evalArguments(SExpression sexp, Environment env) {
+		if(sexp instanceof EmptyList) {
+			return EmptyList.getInstance();
+		}
+		((ConsCell)sexp).setCar(eval(((ConsCell)sexp).getCar(), env));
+		((ConsCell)sexp).setCdr(evalArguments(((ConsCell)sexp).getCdr(), env));
+		return sexp;
+	}
 	/**
 	 * 引数の環境の下で引数のS式を評価する。
 	 * @param sexp S式
@@ -51,22 +60,15 @@ public class Evaluator {
 			 * などの括弧を使ったほぼすべての式の可能性がある
 			 * carは命令かアトム
 			 */
-			SExpression car = ((ConsCell) sexp).getCar();
+			SExpression car = eval(((ConsCell) sexp).getCar(), env);
 			SExpression cdr = ((ConsCell) sexp).getCdr();
 			
 			// 特殊形式(引数を評価しない)
 			// defineは第一引数を評価せず、第二引数を評価して第一引数にセットする
 			// 参考URL: http://www.geocities.jp/m_hiroi/func/abcscm02.html
-			if(eval(car, env) instanceof SpecialForm) {
+			if(car instanceof SpecialForm) {
 				return ((SpecialForm)eval(car, env)).apply(((ConsCell) sexp).getCdr(), env);
 			}
-			
-			if(!(cdr instanceof EmptyList)) {
-				cdr = eval(cdr, env);
-			}
-			
-			car = eval(car, env);
-			
 			
 			// carがクロージャ(/Closure)の時
 			if(car instanceof Closure) {
@@ -74,14 +76,14 @@ public class Evaluator {
 			}
 			
 			// 組み込み形式
-			if(car instanceof Subroutine) { 
-				return ((Subroutine)car).apply(((ConsCell) sexp).getCdr(), env);
+			if(car instanceof Subroutine) {
+				return ((Subroutine)car).apply(evalArguments(cdr, env), env);
 			}
 			
-			
-			((ConsCell) sexp).setCar(car);
-			((ConsCell) sexp).setCdr(cdr);
+			// TODO:carが手続き型でないので何かしらのエラー
 		}
+		
+		// どのデータ型とも一致しない
 		return sexp;
 	}
 }

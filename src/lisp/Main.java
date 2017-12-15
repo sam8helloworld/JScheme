@@ -15,6 +15,7 @@ import lisp.eval.Evaluator;
 import lisp.eval.Exit;
 import lisp.eval.Lambda;
 import lisp.eval.List;
+import lisp.eval.Map;
 import lisp.eval.Multiply;
 import lisp.eval.Quote;
 import lisp.eval.SExpression;
@@ -63,6 +64,7 @@ public class Main {
 		environment.define(Symbol.getInstance("-"), Sub.getInstance());
 		environment.define(Symbol.getInstance("*"), Multiply.getInstance());
 		environment.define(Symbol.getInstance("/"), Divide.getInstance());
+		environment.define(Symbol.getInstance("map"), Map.getInstance());
 		environment.define(Symbol.getInstance("exit"), Exit.getInstance());
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
