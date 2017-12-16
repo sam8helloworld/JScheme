@@ -23,6 +23,7 @@ import lisp.eval.Quote;
 import lisp.eval.SExpression;
 import lisp.eval.Sub;
 import lisp.eval.Symbol;
+import lisp.eval.Write;
 import lisp.exception.EndOfFileException;
 import lisp.exception.LispException;
 import lisp.reader.Reader;
@@ -69,6 +70,7 @@ public class Main {
 		environment.define(Symbol.getInstance("map"), Map.getInstance());
 		environment.define(Symbol.getInstance("="), EqualNumber.getInstance());
 		environment.define(Symbol.getInstance("eq?"), EqualAddress.getInstance());
+		environment.define(Symbol.getInstance("write"), Write.getInstance());
 		environment.define(Symbol.getInstance("exit"), Exit.getInstance());
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
