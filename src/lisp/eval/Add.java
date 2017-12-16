@@ -9,17 +9,26 @@ public class Add implements Subroutine {
 	private static final Add add = new Add();
 	
 	public SExpression apply(SExpression sexp, Environment environment) {
-		Integer num = 0;
-		SExpression s = sexp;
-		while(true) {
-			if(((ConsCell)s).getCdr() instanceof EmptyList) {
-				num += ((Int)((ConsCell)s).getCar()).getValue();
-				break;
+		double num = 0;
+		SExpression tmp = sexp;
+		boolean isDouble = false;;
+		while(tmp instanceof ConsCell) {
+			SExpression car = ((ConsCell)tmp).getCar();
+			if(!(car instanceof Number)) {
+				// 引数が数字でない時エラー
 			}
-			num += ((Int)((ConsCell)s).getCar()).getValue();
-			s = ((ConsCell)s).getCdr(); 
+			// 引数が数値
+			if(car instanceof Int) {
+				num += ((Int)car).getValue();
+			}
+			if(car instanceof lisp.eval.Double) {
+				num += ((lisp.eval.Double)car).getValue();
+				isDouble = true;
+			}
+			tmp = ((ConsCell)tmp).getCdr();
 		}
-		return Int.valueOf(num);
+		
+		return isDouble?lisp.eval.Double.valueOf(num):Int.valueOf((int)num);
 	}
 	
 	public static Add getInstance() {
