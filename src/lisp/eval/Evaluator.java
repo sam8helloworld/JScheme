@@ -21,18 +21,23 @@ public class Evaluator {
 	 * @param env 環境
 	 * @return 評価値(S式)
 	 */
-	public static SExpression eval(SExpression sexp, Environment env) {
-		//sexpが整数(/Int)の時
+	public static SExpression eval(SExpression sexp, Environment env) { 
+		// sexpが整数(/Int)の時
 		if(sexp instanceof Int) {
 			return sexp;
 		}
 		
-		//sexpが実数(/lisp.eval.Double)の時
+		// sexpが実数(/lisp.eval.Double)の時
 		if(sexp instanceof lisp.eval.Double) {
 			return sexp;
 		}
 		
-		//sexpが記号の時
+		// sexpが文字列の時
+		if(sexp instanceof LispString) {
+			return sexp;
+		}
+		
+		// sexpが記号の時
 		if(sexp instanceof Symbol) {
 			/*
 			 * 現在の環境のフレームにあるかどうか確認

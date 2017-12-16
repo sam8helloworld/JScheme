@@ -16,6 +16,7 @@ import lisp.eval.EqualNumber;
 import lisp.eval.Evaluator;
 import lisp.eval.Exit;
 import lisp.eval.Lambda;
+import lisp.eval.LispString;
 import lisp.eval.List;
 import lisp.eval.Map;
 import lisp.eval.Multiply;
@@ -83,6 +84,10 @@ public class Main {
 					System.out.print("lisp> ");
 					SExpression exp = reader.read();
 					SExpression value = Evaluator.eval(exp, environment);
+					if(value instanceof LispString) {
+						System.out.println("\""+value+"\"");
+						continue;
+					}
 					System.out.println(value);
 				} catch (EndOfFileException e) {
 					break;
