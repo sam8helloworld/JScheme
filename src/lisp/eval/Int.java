@@ -5,7 +5,7 @@ package lisp.eval;
  * @author sam0830
  *
  */
-public class Int implements SExpression {
+public class Int implements SExpression, Number {
 	private Integer value;
 	
 	public Integer getValue() {

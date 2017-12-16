@@ -5,7 +5,7 @@ package lisp.eval;
  * @author sam0830
  *
  */
-public class Double implements SExpression {
+public class Double implements SExpression, Number {
 	private java.lang.Double value;
 	
 	public java.lang.Double getValue() {

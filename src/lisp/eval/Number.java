@@ -1,10 +1,10 @@
 package lisp.eval;
 
 /**
- * S式
+ * Number
  * @author sam0830
  *
  */
-public interface SExpression {
+public interface Number {
 	
 }
