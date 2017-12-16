@@ -19,6 +19,7 @@ import lisp.eval.Lambda;
 import lisp.eval.List;
 import lisp.eval.Map;
 import lisp.eval.Multiply;
+import lisp.eval.NewLine;
 import lisp.eval.Quote;
 import lisp.eval.SExpression;
 import lisp.eval.Sub;
@@ -71,6 +72,7 @@ public class Main {
 		environment.define(Symbol.getInstance("="), EqualNumber.getInstance());
 		environment.define(Symbol.getInstance("eq?"), EqualAddress.getInstance());
 		environment.define(Symbol.getInstance("write"), Write.getInstance());
+		environment.define(Symbol.getInstance("newline"), NewLine.getInstance());
 		environment.define(Symbol.getInstance("exit"), Exit.getInstance());
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
