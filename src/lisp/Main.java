@@ -11,6 +11,7 @@ import lisp.eval.Cdr;
 import lisp.eval.Define;
 import lisp.eval.Divide;
 import lisp.eval.Environment;
+import lisp.eval.EqualAddress;
 import lisp.eval.EqualNumber;
 import lisp.eval.Evaluator;
 import lisp.eval.Exit;
@@ -67,6 +68,7 @@ public class Main {
 		environment.define(Symbol.getInstance("/"), Divide.getInstance());
 		environment.define(Symbol.getInstance("map"), Map.getInstance());
 		environment.define(Symbol.getInstance("="), EqualNumber.getInstance());
+		environment.define(Symbol.getInstance("eq?"), EqualAddress.getInstance());
 		environment.define(Symbol.getInstance("exit"), Exit.getInstance());
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());

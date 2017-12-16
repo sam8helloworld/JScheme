@@ -101,7 +101,7 @@ public class Lexer {
 	 * @return 英数字以外に記号として使える文字ならtrue
 	 */
 	private boolean isSign(char ch) {
-		return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '=';
+		return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '=' || ch == '?';
 	}
 
 	/**
@@ -183,8 +183,6 @@ public class Lexer {
 				return new Token(intValue);
 			} catch(Exception e){
 				// 整数値としては解釈できなかった
-				// 実数
-				
 				if (isDigit(symbolSequence.charAt(0))) {
 					throw new SyntaxErrorException("Invalid number format");
 				}
