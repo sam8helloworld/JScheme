@@ -7,7 +7,8 @@ package lisp.reader;
  */
 public class Token {
 	public enum Kind {
-		NUMBER,
+		INTEGER,
+		REALNUMBER,
 		BOOLEAN,
 		SYMBOL,
 		LEFTPAR,
@@ -17,6 +18,7 @@ public class Token {
 	
 	private Kind kind;
 	private int intValue;
+	private double doubleValue;
 	private boolean booleanValue;
 	private String symbol;
 	
@@ -24,8 +26,12 @@ public class Token {
 		this.kind = kind;
 	}
 	Token(int value) {
-		this.kind = Kind.NUMBER;
+		this.kind = Kind.INTEGER;
 		this.intValue = value;
+	}
+	Token(double value) {
+		this.kind = Kind.REALNUMBER;
+		this.doubleValue = value;
 	}
 	Token(boolean value) {
 		this.kind = Kind.BOOLEAN;
@@ -44,6 +50,10 @@ public class Token {
 		return this.intValue;
 	}
 	
+	double getDoubleValue() {
+		return this.doubleValue;
+	}
+	
 	boolean getBooleanValue() {
 		return this.booleanValue;
 	}
@@ -53,9 +63,13 @@ public class Token {
 	
 	@Override
 	public String toString() {
-		// 数値
-		if (this.kind == Kind.NUMBER) {
-			return "Token (Number, " + this.intValue + ")";
+		// 整数
+		if (this.kind == Kind.INTEGER) {
+			return "Token (Integer, " + this.intValue + ")";
+		}
+		// 実数
+		if (this.kind == Kind.REALNUMBER) {
+			return "Token (RealNumber, " + this.doubleValue + ")";
 		}
 		// 真理値
 		if (this.kind == Kind.BOOLEAN) {

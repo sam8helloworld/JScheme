@@ -54,12 +54,21 @@ public class Reader {
 	 */
 	SExpression sExpression() throws IOException, LispException {
 		// 整数値
-		if(this.token.getKind() == Token.Kind.NUMBER) {
+		if(this.token.getKind() == Token.Kind.INTEGER) {
 			int value = this.token.getIntValue();
 			if(this.nestingLevel != 0) { // 式が未完成
 				this.token = this.lexer.getNextToken();
 			}
 			return Int.valueOf(value);
+		}
+		
+		// 実数
+		if(this.token.getKind() == Token.Kind.REALNUMBER) {
+			double value = this.token.getDoubleValue();
+			if(this.nestingLevel != 0) { // 式が未完成
+				this.token = this.lexer.getNextToken();
+			}
+			return lisp.eval.Double.valueOf(value);
 		}
 		
 		// 記号

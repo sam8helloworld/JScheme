@@ -161,20 +161,30 @@ public class Lexer {
 			throw new SyntaxErrorException("Invalid # constant");
 		}
 
-		// 整数値 or 記号
+		// 整数値 or 実数 or 記号
 		if (isSymbolChar(ch)) {
+			boolean maybeRealNumber = false;
 			StringBuffer stringBuffer = new StringBuffer();
-			while(isSymbolChar(ch)){
+			while(isSymbolChar(ch)||ch == '.'){
+				if(ch == '.') {
+					maybeRealNumber = true;
+				}
 				stringBuffer.append(ch);
 				updateNextChar();
 				ch = this.nextChar;				
 			}
 			String symbolSequence = stringBuffer.toString();
 			try {
+				if(maybeRealNumber) {
+					double doubleValue = Double.parseDouble(symbolSequence);
+					return new Token(doubleValue);
+				}
 				int intValue = Integer.parseInt(symbolSequence);
 				return new Token(intValue);
 			} catch(Exception e){
 				// 整数値としては解釈できなかった
+				// 実数
+				
 				if (isDigit(symbolSequence.charAt(0))) {
 					throw new SyntaxErrorException("Invalid number format");
 				}

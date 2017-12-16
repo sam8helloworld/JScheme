@@ -27,7 +27,7 @@ public class Evaluator {
 			return sexp;
 		}
 		
-		//sexpが浮動小数点数(/lisp.eval.Double)の時
+		//sexpが実数(/lisp.eval.Double)の時
 		if(sexp instanceof lisp.eval.Double) {
 			return sexp;
 		}
