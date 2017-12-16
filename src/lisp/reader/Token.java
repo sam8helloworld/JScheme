@@ -9,6 +9,7 @@ public class Token {
 	public enum Kind {
 		INTEGER,
 		REALNUMBER,
+		STRING,
 		BOOLEAN,
 		SYMBOL,
 		LEFTPAR,
@@ -19,6 +20,7 @@ public class Token {
 	private Kind kind;
 	private int intValue;
 	private double doubleValue;
+	private String stringValue;
 	private boolean booleanValue;
 	private String symbol;
 	
@@ -32,6 +34,10 @@ public class Token {
 	Token(double value) {
 		this.kind = Kind.REALNUMBER;
 		this.doubleValue = value;
+	}
+	Token(String value, int string) {
+		this.kind = Kind.STRING;
+		this.stringValue = value;
 	}
 	Token(boolean value) {
 		this.kind = Kind.BOOLEAN;
@@ -54,6 +60,10 @@ public class Token {
 		return this.doubleValue;
 	}
 	
+	String getStringValue() {
+		return this.stringValue;
+	}
+	
 	boolean getBooleanValue() {
 		return this.booleanValue;
 	}
@@ -70,6 +80,10 @@ public class Token {
 		// 実数
 		if (this.kind == Kind.REALNUMBER) {
 			return "Token (RealNumber, " + this.doubleValue + ")";
+		}
+		// 文字列
+		if (this.kind == Kind.STRING) {
+			return "Token (String, " + this.stringValue + ")";
 		}
 		// 真理値
 		if (this.kind == Kind.BOOLEAN) {

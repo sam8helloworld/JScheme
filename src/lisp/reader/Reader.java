@@ -9,6 +9,7 @@ import lisp.eval.Bool;
 import lisp.eval.ConsCell;
 import lisp.eval.EmptyList;
 import lisp.eval.Int;
+import lisp.eval.LispString;
 import lisp.eval.SExpression;
 import lisp.eval.Symbol;
 import lisp.exception.LispException;
@@ -69,6 +70,15 @@ public class Reader {
 				this.token = this.lexer.getNextToken();
 			}
 			return lisp.eval.Double.valueOf(value);
+		}
+		
+		// 文字列
+		if(this.token.getKind() == Token.Kind.STRING) {
+			String value = this.token.getStringValue();
+			if(this.nestingLevel != 0) { // 式が未完成
+				this.token = this.lexer.getNextToken();
+			}
+			return LispString.getInstance(value);
 		}
 		
 		// 記号

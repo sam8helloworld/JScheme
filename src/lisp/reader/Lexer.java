@@ -101,7 +101,7 @@ public class Lexer {
 	 * @return 英数字以外に記号として使える文字ならtrue
 	 */
 	private boolean isSign(char ch) {
-		return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '=' || ch == '?';
+		return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '=' || ch == '?' || ch == '"';
 	}
 
 	/**
@@ -160,8 +160,26 @@ public class Lexer {
 			}
 			throw new SyntaxErrorException("Invalid # constant");
 		}
+		
+		// ' " ' 文字列
+		if(ch == '"') {
+			StringBuffer stringBuffer = new StringBuffer();
+			while(isSymbolChar(ch)){
+				stringBuffer.append(ch);
+				updateNextChar();
+				ch = this.nextChar;	
+				// 次の文字が空白文字かつ最後に読み込んだ文字がダブルクォーテーション
+				if(isWhiteSpaceChar(ch) && stringBuffer.charAt(stringBuffer.length()-1) == '"') {
+					stringBuffer.deleteCharAt(stringBuffer.length()-1);
+					stringBuffer.deleteCharAt(0);
+					break;
+				}
+			}
+			String stringSequence = stringBuffer.toString();
+			return new Token(stringSequence, 0);
+		}
 
-		// 整数値 or 実数 or 記号
+		// 整数値 or 実数 or 記号 or 文字列
 		if (isSymbolChar(ch)) {
 			boolean maybeRealNumber = false;
 			StringBuffer stringBuffer = new StringBuffer();
