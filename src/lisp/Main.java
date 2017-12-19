@@ -8,6 +8,7 @@ import lisp.eval.Add;
 import lisp.eval.Append;
 import lisp.eval.Car;
 import lisp.eval.Cdr;
+import lisp.eval.Cons;
 import lisp.eval.Define;
 import lisp.eval.Divide;
 import lisp.eval.Environment;
@@ -65,6 +66,7 @@ public class Main {
 		environment.define(Symbol.getInstance("cdr"), Cdr.getInstance());
 		environment.define(Symbol.getInstance("list"), List.getInstance());
 		environment.define(Symbol.getInstance("append"), Append.getInstance());
+		environment.define(Symbol.getInstance("cons"), Cons.getInstance());
 		environment.define(Symbol.getInstance("+"), Add.getInstance());
 		environment.define(Symbol.getInstance("-"), Sub.getInstance());
 		environment.define(Symbol.getInstance("*"), Multiply.getInstance());
