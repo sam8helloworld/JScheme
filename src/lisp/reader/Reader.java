@@ -110,6 +110,36 @@ public class Reader {
 			this.nestingLevel++;
 			this.token = this.lexer.getNextToken();
 			
+			ConsCell.ListBuilder listBuilder = ConsCell.builder();
+			while(true) {
+				// 右括弧
+				if(this.token.getKind() == Token.Kind.RIGHTPAR) {
+					this.nestingLevel--;
+					if (this.nestingLevel != 0) { // 式が未完成
+						this.token = this.lexer.getNextToken();
+					}
+					return listBuilder.build();
+				}
+				// car
+				SExpression car = sExpression();
+				
+				// ドット対
+				if (this.token.getKind() == Token.Kind.DOT) {
+					this.token = this.lexer.getNextToken();
+					// cdr
+					SExpression cdr = sExpression();
+					if (this.token.getKind() != Token.Kind.RIGHTPAR) {
+						throw new SyntaxErrorException("')' expected");
+					}
+					this.nestingLevel--;
+					if (this.nestingLevel != 0) { // 式が未完成
+						this.token = this.lexer.getNextToken();
+					}
+					return ConsCell.getInstance(car, cdr);
+				}
+				listBuilder.tail(car);
+			}
+			/*
 			List<SExpression> sList = new ArrayList<SExpression>();
 			while(true) {
 				// 右括弧
@@ -150,10 +180,10 @@ public class Reader {
 					}
 					return ConsCell.getInstance(car, cdr);
 				}
+				// S式の次の軸がドットでない(/S式のループ)
 				sList.add(car);
 			}
-			
-			
+			*/
 		}
 		
 		throw new SyntaxErrorException("Invalid expression:" + this.token.getKind());
