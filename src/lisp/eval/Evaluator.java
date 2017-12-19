@@ -45,8 +45,6 @@ public class Evaluator {
 			 * フレームにあれば対応するS式を返す
 			 * 手続きが返された場合はListでないのでエラー
 			 */
-			SExpression symbolExpression = env.get((Symbol)sexp);
-			//env.define((Symbol)sexp, sexp);//テスト用
 			return env.get((Symbol)sexp);
 		}
 		

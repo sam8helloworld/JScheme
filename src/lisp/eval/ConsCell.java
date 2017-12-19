@@ -55,7 +55,35 @@ public class ConsCell implements SExpression {
 	
 	@Override
 	public String toString() {
-		return "(" + this.car + " . " + this.cdr + ")";
+		/*
+		 * 純粋なConsCellの時
+		 * (1 . 2)
+		 * (1)
+		 * (() . 1)
+		 */
+		if(!(this.car instanceof ConsCell)&&!(this.cdr instanceof ConsCell)) {
+			// cdrが空リスト
+			if(this.cdr instanceof EmptyList) {
+				return "(" + this.car + ")";
+			}
+			// cdrが空リストでない
+			return "(" + this.car + " . " + this.cdr + ")";
+		}
+		/*
+		 * リスト
+		 */
+		SExpression tmp = this;
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("(");
+		while(tmp instanceof ConsCell) {
+			stringBuilder.append(((ConsCell)tmp).getCar());
+			stringBuilder.append(" ");
+			tmp = ((ConsCell)tmp).getCdr();
+		}
+		stringBuilder.deleteCharAt(stringBuilder.length()-1);
+		stringBuilder.append(")");
+		return stringBuilder.toString();
+		
 	}
 	
 	
