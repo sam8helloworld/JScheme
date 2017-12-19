@@ -9,17 +9,18 @@ public class Multiply implements Subroutine {
 	private static final Multiply multiply = new Multiply();
 	
 	public SExpression apply(SExpression sexp, Environment environment) {
-		Integer num = 1;
-		SExpression s = sexp;
-		while(true) {
-			if(((ConsCell)s).getCdr() instanceof EmptyList) {
-				num *= ((Int)((ConsCell)s).getCar()).getValue();
-				break;
+		Number number = Int.valueOf(1);
+		SExpression tmp = sexp;
+		while(tmp instanceof ConsCell) {
+			SExpression car = ((ConsCell)tmp).getCar();
+			if(!(car instanceof Number)) {
+				// エラー
 			}
-			num *= ((Int)((ConsCell)s).getCar()).getValue();
-			s = ((ConsCell)s).getCdr(); 
+			// 引数が数値
+			number = number.multiply((Number)car);
+			tmp = ((ConsCell)tmp).getCdr(); 
 		}
-		return Int.valueOf(num);
+		return number;
 	}
 	
 	public static Multiply getInstance() {

@@ -19,6 +19,40 @@ public class Int implements SExpression, Number {
 	private Int(Integer value) {
 		this.value = value;
 	}
+	
+	public Number add(Number number) {
+		if(number instanceof Int) {
+			return valueOf(value + ((Int)number).getValue());
+		}
+		return lisp.eval.Double.valueOf(value + ((lisp.eval.Double)number).getValue());
+	}
+	
+	public Number sub(Number number) {
+		if(number instanceof Int) {
+			return valueOf(value - ((Int)number).getValue());
+		}
+		return lisp.eval.Double.valueOf(value - ((lisp.eval.Double)number).getValue());
+	}
+	
+	public Number multiply(Number number) {
+		if(number instanceof Int) {
+			return valueOf(value * ((Int)number).getValue());
+		}
+		return lisp.eval.Double.valueOf(value * ((lisp.eval.Double)number).getValue());
+	}
+	
+	public Number divide(Number number) {
+		if(number instanceof Int) {
+			if(((Int)number).getValue() == 0) {
+				// エラー
+			}
+			return lisp.eval.Double.valueOf(value / (double)((Int)number).getValue());
+		}
+		if(((lisp.eval.Double)number).getValue() == 0) {
+			// エラー
+		}
+		return lisp.eval.Double.valueOf(value / ((lisp.eval.Double)number).getValue());
+	}
 
 	@Override
 	public String toString() {

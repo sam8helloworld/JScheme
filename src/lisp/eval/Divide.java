@@ -9,17 +9,39 @@ public class Divide implements Subroutine {
  private static final Divide divide = new Divide();
 	
 	public SExpression apply(SExpression sexp, Environment environment) {
-		java.lang.Double num = (((Int)((ConsCell)sexp).getCar()).getValue()).doubleValue();
-		SExpression s = ((ConsCell)sexp).getCdr();
-		while(true) {
-			if(((ConsCell)s).getCdr() instanceof EmptyList) {
-				num /= (((Int)((ConsCell)s).getCar()).getValue()).doubleValue();
-				break;
-			}
-			num /= (((Int)((ConsCell)s).getCar()).getValue()).doubleValue();
-			s = ((ConsCell)s).getCdr(); 
+		// 引数なし
+		if(sexp instanceof EmptyList) {
+			// エラー
 		}
-		return lisp.eval.Double.valueOf(num);
+		
+		SExpression car = ((ConsCell)sexp).getCar();
+		
+		// 引数1個
+		if(((ConsCell)sexp).getSize() == 1) {
+			// 引数が数値でない
+			if(!(car instanceof Number)) {
+				// エラー
+			}
+			// 引数が数値
+			return Int.valueOf(1).divide((Number)car);
+		}
+		
+		// 引数が2個以上
+		if(!(car instanceof Number)) {
+			// エラー
+		}
+		Number number = (Number)car;
+		SExpression tmp = ((ConsCell)sexp).getCdr();
+		while(tmp instanceof ConsCell) {
+			SExpression arg = ((ConsCell)tmp).getCar();
+			if(!(arg instanceof Number)) {
+				// エラー
+			}
+			// 引数が数値
+			number = number.divide((Number)arg);
+			tmp = ((ConsCell)tmp).getCdr();
+		}
+		return number;
 	}
 	
 	public static Divide getInstance() {
