@@ -141,6 +141,12 @@ public class Lexer {
 			updateNextChar();
 			return new Token(Token.Kind.DOT);
 		}
+		
+		// '
+		if (ch == '\'') {
+			updateNextChar();
+			return new Token(Token.Kind.QUOTE);
+		}
 		// '#t' or '#f'
 		if (ch == '#') {
 			StringBuffer stringBuffer = new StringBuffer();

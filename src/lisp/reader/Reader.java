@@ -99,6 +99,12 @@ public class Reader {
 			return Bool.valueOf(value);
 		}
 		
+		// '(クォート)
+		if(this.token.getKind() == Token.Kind.QUOTE) {
+			this.token = this.lexer.getNextToken();
+			return sExpression();
+		}
+		
 		// '(' ')' or '(' <S式> . <S式> ')' or '(' <S式> <S式> ...<S式> ')'
 		if (this.token.getKind() == Token.Kind.LEFTPAR) {
 			this.nestingLevel++;

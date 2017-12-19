@@ -14,7 +14,8 @@ public class Token {
 		SYMBOL,
 		LEFTPAR,
 		RIGHTPAR,
-		DOT
+		DOT,
+		QUOTE
 	}
 	
 	private Kind kind;
@@ -104,6 +105,10 @@ public class Token {
 		// ドット
 		if (this.kind == Kind.DOT) {
 			return "Token (Dot)";
+		}
+		// '(クォート)
+		if (this.kind == Kind.QUOTE) {
+			return "Token (Quote)";
 		}
 		return "Token (Unknown)";
 	}
