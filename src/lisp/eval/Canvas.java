@@ -1,5 +1,6 @@
 package lisp.eval;
 
+import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import javax.swing.JFrame;
@@ -29,6 +30,20 @@ public class Canvas extends JFrame implements SExpression {
 	
 	public static Canvas getInstance(Number x, Number y, Number width, Number height) {
 		return new Canvas(x, y, width, height);
+	}
+	
+	public void drawLine(Number x1, Number y1, Number x2, Number y2) {
+		int x1Pos = (x1 instanceof Int)?((Int)x1).getValue():(((lisp.eval.Double)x1).getValue()).intValue();
+		int y1Pos = (y1 instanceof Int)?((Int)y1).getValue():(((lisp.eval.Double)y1).getValue()).intValue();
+		int x2Pos = (x2 instanceof Int)?((Int)x2).getValue():(((lisp.eval.Double)x2).getValue()).intValue();
+		int y2Pos = (y2 instanceof Int)?((Int)y2).getValue():(((lisp.eval.Double)y2).getValue()).intValue();
+		Graphics g = this.getGraphics();
+		g.drawLine(x1Pos, y1Pos, x2Pos, y2Pos);
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
 	}
 	
 	@Override
