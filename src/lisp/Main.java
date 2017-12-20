@@ -20,6 +20,7 @@ import lisp.eval.Exit;
 import lisp.eval.Lambda;
 import lisp.eval.LispString;
 import lisp.eval.List;
+import lisp.eval.MakeCanvas;
 import lisp.eval.Map;
 import lisp.eval.Multiply;
 import lisp.eval.NewLine;
@@ -81,6 +82,7 @@ public class Main {
 		environment.define(Symbol.getInstance("exit"), Exit.getInstance());
 		environment.define(Symbol.getInstance("sin"), Sin.getInstance());
 		environment.define(Symbol.getInstance("cos"), Cos.getInstance());
+		environment.define(Symbol.getInstance("make-canvas"), MakeCanvas.getInstance());
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
 		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
