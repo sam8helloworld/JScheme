@@ -18,9 +18,9 @@ public class Define implements SpecialForm {
 		SExpression s1 = ((ConsCell)sexp).getCar();
 		SExpression s2 = ((ConsCell)((ConsCell)sexp).getCdr()).getCar();
 		// 第一引数がリスト
-		ConsCell.ListBuilder listBuilderDefine = ConsCell.builder();
-		ConsCell.ListBuilder listBuilderLambda = ConsCell.builder();
 		if(s1 instanceof ConsCell) {
+			ConsCell.ListBuilder listBuilderDefine = ConsCell.builder();
+			ConsCell.ListBuilder listBuilderLambda = ConsCell.builder();
 			SExpression name = ((ConsCell)s1).getCar();
 			SExpression args = ((ConsCell)s1).getCdr();
 			SExpression body = s2;
@@ -29,10 +29,10 @@ public class Define implements SpecialForm {
 			listBuilderLambda.tail(body);
 			listBuilderDefine.tail(name);
 			listBuilderDefine.tail(listBuilderLambda.build());
+			SExpression s = listBuilderDefine.build();
+			s1 = ((ConsCell)s).getCar();
+			s2 = ((ConsCell)((ConsCell)s).getCdr()).getCar();
 		}
-		SExpression s = listBuilderDefine.build();
-		s1 = ((ConsCell)s).getCar();
-		s2 = ((ConsCell)((ConsCell)s).getCdr()).getCar();
 		// 第一引数がSymbol
 		SExpression s2Result = Evaluator.eval(s2, environment);
 		environment.define(Symbol.getInstance(s1.toString()), s2Result);
