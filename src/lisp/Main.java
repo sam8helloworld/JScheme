@@ -9,6 +9,7 @@ import lisp.eval.Append;
 import lisp.eval.Car;
 import lisp.eval.Cdr;
 import lisp.eval.Cons;
+import lisp.eval.Cos;
 import lisp.eval.Define;
 import lisp.eval.Divide;
 import lisp.eval.Environment;
@@ -79,6 +80,7 @@ public class Main {
 		environment.define(Symbol.getInstance("newline"), NewLine.getInstance());
 		environment.define(Symbol.getInstance("exit"), Exit.getInstance());
 		environment.define(Symbol.getInstance("sin"), Sin.getInstance());
+		environment.define(Symbol.getInstance("cos"), Cos.getInstance());
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
 		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
