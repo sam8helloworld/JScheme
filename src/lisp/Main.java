@@ -24,6 +24,7 @@ import lisp.eval.Multiply;
 import lisp.eval.NewLine;
 import lisp.eval.Quote;
 import lisp.eval.SExpression;
+import lisp.eval.Sin;
 import lisp.eval.Sub;
 import lisp.eval.Symbol;
 import lisp.eval.Write;
@@ -77,6 +78,7 @@ public class Main {
 		environment.define(Symbol.getInstance("write"), Write.getInstance());
 		environment.define(Symbol.getInstance("newline"), NewLine.getInstance());
 		environment.define(Symbol.getInstance("exit"), Exit.getInstance());
+		environment.define(Symbol.getInstance("sin"), Sin.getInstance());
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
 		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
