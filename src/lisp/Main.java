@@ -114,6 +114,7 @@ public class Main {
 					}
 				}
 				bufferedReader.close();
+				return;
 			} catch(Exception e) {
 				System.out.println(e);
 			}
