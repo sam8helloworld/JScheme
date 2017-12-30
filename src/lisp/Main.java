@@ -18,6 +18,7 @@ import lisp.eval.EqualAddress;
 import lisp.eval.EqualNumber;
 import lisp.eval.Evaluator;
 import lisp.eval.Exit;
+import lisp.eval.If;
 import lisp.eval.Lambda;
 import lisp.eval.LispString;
 import lisp.eval.List;
@@ -88,6 +89,7 @@ public class Main {
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
 		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
+		environment.define(Symbol.getInstance("if"), If.getInstance());
 		try {
 			while(true) {
 				try {
