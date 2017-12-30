@@ -12,7 +12,7 @@ public class If implements SpecialForm {
 	}
 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) {
-		if(sexp instanceof ConsCell) {
+		if(!(sexp instanceof ConsCell)) {
 			// TODO エラー
 		}
 		// 引数が3個ある時(predicate then else)
