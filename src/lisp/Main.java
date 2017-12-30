@@ -1,6 +1,8 @@
 package lisp;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -62,12 +64,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws IOException {
-		printGreetingMessage();
-		
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-		Reader reader = new Reader(bufferedReader);
 		Environment environment = new Environment(null);
-		
 		environment.define(Symbol.getInstance("car"), Car.getInstance());
 		environment.define(Symbol.getInstance("cdr"), Cdr.getInstance());
 		environment.define(Symbol.getInstance("list"), List.getInstance());
@@ -92,6 +89,38 @@ public class Main {
 		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
 		environment.define(Symbol.getInstance("if"), If.getInstance());
 		environment.define(Symbol.getInstance("set!"), Set.getInstance());
+		printGreetingMessage();
+		
+		BufferedReader bufferedReader;
+		Reader reader;
+		if(args.length != 0) {
+			try {
+				File file = new File(args[0]);
+				bufferedReader = new BufferedReader(new FileReader(file));
+				reader = new Reader(bufferedReader);
+				while(true) {
+					try {
+						SExpression exp = reader.read();
+						SExpression value = Evaluator.eval(exp, environment);
+						if(value instanceof LispString) {
+							System.out.println("\""+value+"\"");
+							continue;
+						}
+						System.out.println(value);
+					} catch (EndOfFileException e) {
+						break;
+					} catch (LispException e) {
+						System.err.println(e.getMessage());
+					}
+				}
+				bufferedReader.close();
+			} catch(Exception e) {
+				System.out.println(e);
+			}
+		}
+		
+		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		reader = new Reader(bufferedReader);
 		try {
 			while(true) {
 				try {
