@@ -28,6 +28,7 @@ import lisp.eval.Multiply;
 import lisp.eval.NewLine;
 import lisp.eval.Quote;
 import lisp.eval.SExpression;
+import lisp.eval.Set;
 import lisp.eval.Sin;
 import lisp.eval.Sub;
 import lisp.eval.Symbol;
@@ -90,6 +91,7 @@ public class Main {
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
 		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
 		environment.define(Symbol.getInstance("if"), If.getInstance());
+		environment.define(Symbol.getInstance("set!"), Set.getInstance());
 		try {
 			while(true) {
 				try {
