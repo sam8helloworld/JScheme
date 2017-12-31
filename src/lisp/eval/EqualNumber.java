@@ -1,7 +1,5 @@
 package lisp.eval;
 
-import java.util.ArrayList;
-
 /**
  * 数値比較(=)
  * @author sam0830
@@ -11,25 +9,28 @@ public class EqualNumber implements Subroutine {
 	private static final EqualNumber equalNumber = new EqualNumber();
 	
 	public SExpression apply(SExpression sexp, Environment environment) { 
-		ArrayList<Number> arrayList = new ArrayList<Number>();
-		SExpression tmp = sexp;
-		// 各引数をリストに格納
-		while(!(tmp instanceof EmptyList)) {
-			// 引数はすべてNumberである必要がある
-			SExpression car = ((ConsCell)tmp).getCar();
-			if(!(car instanceof Number)) {
-				// TODO:エラー
-			}
-			arrayList.add((Number)car);
-			tmp = ((ConsCell)tmp).getCdr();
+		// 引数が2つ以上でないときエラー
+		if(!(sexp instanceof ConsCell)) {
+			throw new RuntimeException("引数が足りない");
 		}
-		// リストの要素がすべて同じかどうか確認
-		Number element = arrayList.get(0);
-		double elementFirst = (element instanceof Int)?((Int)element).getValue():((lisp.eval.Double)element).getValue();
+		int size = ((ConsCell)sexp).size();
+		if(size < 2) {
+			throw new RuntimeException("引数が足りない");
+		}
+		SExpression arg = ((ConsCell)sexp).getCar();
+		if(!(arg instanceof Number)) {
+			throw new RuntimeException("引数が数字でない");
+		}
 		
-		for(Number number : arrayList) {
-			double arg = (number instanceof Int)?((Int)number).getValue():((lisp.eval.Double)number).getValue();
-			if(elementFirst != arg) {
+		double comparedNumber = (arg instanceof Int)?((Int)arg).getValue():((lisp.eval.Double)arg).getValue();
+		for(int i=1;i<size;i++) {
+			SExpression tmp = ((ConsCell)sexp).get(i);
+			if(!(tmp instanceof Number)) {
+				throw new RuntimeException("引数が数字でない");
+			}
+			Number num = (Number)tmp;
+			double number = (num instanceof Int)?((Int)num).getValue():((lisp.eval.Double)num).getValue();
+			if(comparedNumber != number) {
 				return Bool.valueOf(false);
 			}
 		}
