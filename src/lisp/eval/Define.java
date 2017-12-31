@@ -35,7 +35,7 @@ public class Define implements SpecialForm {
 		}
 		// 第一引数がSymbol
 		SExpression s2Result = Evaluator.eval(s2, environment);
-		environment.define(Symbol.getInstance(s1.toString()), s2Result);
+		environment.define((Symbol)s1, s2Result);
 		return Symbol.getInstance(s1.toString());
 	}
 	
