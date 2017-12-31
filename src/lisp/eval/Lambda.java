@@ -9,10 +9,16 @@ public class Lambda implements SpecialForm {
 	private static final Lambda lambda = new Lambda();
 
 	public SExpression apply(SExpression sexp, Environment environment) {
-		SExpression s1 = ((ConsCell)sexp).getCar(); // 引数
-		SExpression s2 = ((ConsCell)((ConsCell)sexp).getCdr()).getCar(); // 手続き本体
+		if(!(sexp instanceof ConsCell)) {
+			throw new RuntimeException("引数の個数が違う");
+		}
+		if(((ConsCell)sexp).size() != 2) {
+			throw new RuntimeException("引数の個数が違う");
+		}
+		SExpression params = ((ConsCell)sexp).get(0); // 引数
+		SExpression body = ((ConsCell)sexp).get(1); // 手続き本体
 		
-		return Closure.getInstance(s2, s1, environment);
+		return Closure.getInstance(body, params);
 	}
 
 	public static Lambda getInstance() {
