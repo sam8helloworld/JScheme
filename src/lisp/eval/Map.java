@@ -1,7 +1,5 @@
 package lisp.eval;
 
-import java.util.ArrayList;
-
 /**
  * Map
  * @author sam0830
@@ -11,45 +9,49 @@ public class Map implements Subroutine {
 	private static final Map map = new Map();
 	
 	public SExpression apply(SExpression sexp, Environment environment) {
+		// 引数は必ず2個以上
+		if(!(sexp instanceof ConsCell)) {
+			// エラー
+		}
 		SExpression proc = ((ConsCell)sexp).getCar();
 		SExpression lists = ((ConsCell)sexp).getCdr();
+		// すべてのリストがリスト
+		// リストの最少要素数を取得
+		int min = -1;
+		for(int i=0;i<((ConsCell)lists).size();i++) {
+			SExpression tmpList = ((ConsCell)lists).get(i);
+			if(!(tmpList instanceof ConsCell)) {
+				throw new RuntimeException("リスト以外が引数にある");
+			}
+			if(!((ConsCell)tmpList).isList()) {
+				throw new RuntimeException("リスト以外が引数にある");
+			}
+			int size = ((ConsCell)tmpList).size();
+			if(min == -1) {
+				min = size;
+				continue;
+			}
+			if(size < min) {
+				min = size;
+			}
+		}
 		ConsCell.ListBuilder listBuilder = ConsCell.builder();
-		
-		ArrayList<SExpression> arrayList = new ArrayList<SExpression>();
-		ArrayList<SExpression> argumentsList = new ArrayList<SExpression>();
-		while(!(lists instanceof EmptyList)) {
-			arrayList.add(((ConsCell)lists).getCar());
-			lists = ((ConsCell)lists).getCdr();
-		}
-		
-		
-		int listsNum = arrayList.size();
-		int firstListSize = ((ConsCell)arrayList.get(0)).size();
-		for(int i=0;i<firstListSize;i++) {
-			ConsCell.ListBuilder tmp = ConsCell.builder();
-			boolean isEmpty = false;
-			for(int j=0;j<listsNum;j++) {
-				SExpression element = ((ConsCell)arrayList.get(j)).get(i);
-				if(element instanceof EmptyList) {
-					isEmpty = true;
+		for(int elNum=0;elNum<min;elNum++) {
+			ConsCell.ListBuilder listBuilderElement = ConsCell.builder();
+			listBuilderElement.tail(proc);
+			for(int listNum=0;listNum<((ConsCell)lists).size();listNum++) {
+				// listNum個目のリストを取得
+				SExpression list = ((ConsCell)lists).get(listNum);
+				if(!(list instanceof ConsCell)) {
+					throw new RuntimeException("リスト以外が引数にある");
 				}
-				tmp.tail(element);
+				// listNum個目のリストのelNum番目の要素を取得
+				SExpression element = ((ConsCell)list).get(elNum);
+				// 要素をリストに追加
+				listBuilderElement.tail(element);
 			}
-			if(!isEmpty) {
-				argumentsList.add(tmp.build());
-			}
-		}
-		for(SExpression arg: argumentsList) {
-			if(proc instanceof SpecialForm) {
-				listBuilder.tail(((SpecialForm)proc).apply(arg, environment));
-			}
-			if(proc instanceof Subroutine) {
-				listBuilder.tail(((Subroutine)proc).apply(arg, environment));
-			}
-			if(proc instanceof Closure) {
-				listBuilder.tail(((Closure)proc).apply(arg, environment));
-			}
-			
+			SExpression evaled = Evaluator.eval(listBuilderElement.build(), environment);
+			listBuilder.tail(evaled);
 		}
 		return listBuilder.build();
 	}
