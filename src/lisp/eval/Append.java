@@ -1,7 +1,5 @@
 package lisp.eval;
 
-import java.util.ArrayList;
-
 /**
  * Append
  * @author sam0830
@@ -10,29 +8,32 @@ import java.util.ArrayList;
 public class Append implements Subroutine {
 	private static final Append append = new Append();
 	
+	private SExpression append(SExpression list1, SExpression list2) {
+		if(list1 instanceof EmptyList) {
+			return list2;
+		}
+		if(!(list1 instanceof ConsCell)) {
+			// エラー
+			throw new RuntimeException("エラー");
+		}
+		return ConsCell.getInstance(((ConsCell)list1).getCar(),
+				                    append(((ConsCell)list1).getCdr(), list2)
+				                    );
+	}
+	
 	public SExpression apply(SExpression sexp, Environment environment) {
-		// appendの引数が空リスト or アトム
+		// appendの引数が空リスト 
 		if(!(sexp instanceof ConsCell)) {
 			return sexp;
 		}
-		
-		ArrayList<SExpression> lists = new ArrayList<SExpression>();
-		SExpression tmp = sexp;
-		while(true) {
-			lists.add(((ConsCell)tmp).getCar());
-			if(((ConsCell)tmp).getCdr() instanceof EmptyList) {
-				break;
-			}
-			tmp = ((ConsCell)tmp).getCdr(); 
+		if(((ConsCell)sexp).size() == 1) {
+			return sexp;
 		}
-		
-		ConsCell.ListBuilder listBuilder = ConsCell.builder();
-		for(SExpression list : lists) {
-			for(;list instanceof ConsCell; list = ((ConsCell)list).getCdr()) {
-				listBuilder.tail(((ConsCell)list).getCar());
-			}
+		SExpression appendedList = ((ConsCell)sexp).get(0);
+		for(int i=0;i<((ConsCell)sexp).size()-1;i++) {
+			appendedList = append(appendedList, ((ConsCell)sexp).get(i+1));
 		}
-		return listBuilder.build();
+		return appendedList;
 	}
 	
 	public static Append getInstance() {

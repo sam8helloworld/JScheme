@@ -34,7 +34,7 @@ public class ConsCell implements SExpression {
 		return ((ConsCell)this.cdr).get(n-1);
 	}
 	
-	public int getSize() {
+	public int size() {
 		int size = 0;
 		SExpression sexp = this;
 		while(!(sexp instanceof EmptyList)) {
@@ -79,6 +79,12 @@ public class ConsCell implements SExpression {
 			stringBuilder.append(((ConsCell)tmp).getCar());
 			stringBuilder.append(" ");
 			tmp = ((ConsCell)tmp).getCdr();
+		}
+		if(!(tmp instanceof EmptyList)) {
+			stringBuilder.append(".");
+			stringBuilder.append(" ");
+			stringBuilder.append(tmp);
+			stringBuilder.append(" ");
 		}
 		stringBuilder.deleteCharAt(stringBuilder.length()-1);
 		stringBuilder.append(")");
