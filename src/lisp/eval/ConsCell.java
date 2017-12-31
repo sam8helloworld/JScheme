@@ -44,6 +44,17 @@ public class ConsCell implements SExpression {
 		return size;
 	}
 	
+	public boolean isList() {
+		SExpression tmp = this;
+		while(tmp instanceof ConsCell) {
+			tmp = ((ConsCell)tmp).getCdr();
+		}
+		if(tmp instanceof EmptyList) {
+			return true;
+		}
+		return false;
+	}
+	
 	public static ConsCell getInstance(SExpression car, SExpression cdr) {
 		return new ConsCell(car, cdr);
 	}
