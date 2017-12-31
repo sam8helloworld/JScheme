@@ -8,35 +8,51 @@ package lisp.eval;
 public class Closure implements SExpression {	
 	private SExpression body;
 	private SExpression params;
-	private Environment environment;
-	
 	
 	public SExpression apply(SExpression sexp, Environment environment) {
 		// 環境をもうひとつ作成
-		Environment env = new Environment(this.environment);
-		// 引数を環境にセット
-		SExpression tmpParams = sexp; // 実引数
-		SExpression tmpParamsVirtual = params; // 仮引数
-		while(true) {
-			env.define(Symbol.getInstance((((ConsCell)tmpParamsVirtual).getCar()).toString()), ((ConsCell)tmpParams).getCar());
-			if((((ConsCell)tmpParamsVirtual).getCdr() instanceof EmptyList)) {
-				break;
+		Environment env = new Environment(environment);
+		// 実引数と仮引数の個数が対応しているか確認
+		// 仮引数が空リストの時
+		// 仮引数がリストの時
+		// 仮引数がシンボルの時
+		if(params instanceof EmptyList) {
+			if(!(sexp instanceof EmptyList)) {
+				throw new RuntimeException("引数の個数が違う");
 			}
-			tmpParamsVirtual = ((ConsCell)tmpParamsVirtual).getCdr();
-			tmpParams = ((ConsCell)tmpParams).getCdr();
 		}
-		SExpression result = Evaluator.eval(this.body, env);
-		return result;
+		if(params instanceof ConsCell) {
+			if(((ConsCell)params).size() != ((ConsCell)sexp).size()) {
+				throw new RuntimeException("引数の個数が違う");
+			}
+			for(int i=0;i<((ConsCell)params).size();i++) {
+				SExpression symbol = ((ConsCell)params).get(i);
+				if(!(symbol instanceof Symbol)) {
+					throw new RuntimeException("引数の型がSymbolでない");
+				}
+				env.define((Symbol)symbol, ((ConsCell)sexp).get(i));
+			}
+		}
+		if(params instanceof Symbol) {
+			// 実引数をまとめてリストにする
+			if(sexp instanceof ConsCell) {
+				ConsCell.ListBuilder listBuilder = ConsCell.builder();
+				for(int i=0;i<((ConsCell)sexp).size();i++) {
+					listBuilder.tail(((ConsCell)sexp).get(i));
+				}
+				sexp = listBuilder.build();
+			}
+			env.define((Symbol)params, sexp);
+		}
+		return Evaluator.eval(this.body, env);
 	}
 	
-	
-	private Closure(SExpression body, SExpression params, Environment env) {
+	private Closure(SExpression body, SExpression params) {
 		this.body = body;
 		this.params = params;
-		this.environment = env;
 	}
 	
-	public static Closure getInstance(SExpression body, SExpression params, Environment env) {
-		return new Closure(body, params, env);
+	public static Closure getInstance(SExpression body, SExpression params) {
+		return new Closure(body, params);
 	} 
 }
