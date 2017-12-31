@@ -16,7 +16,7 @@ public class EqualAddress implements Subroutine {
 		if(sexp instanceof EmptyList) {
 			// エラー
 		}
-		if(((ConsCell)sexp).getSize() != 2) {
+		if(((ConsCell)sexp).size() != 2) {
 			// エラー
 		}
 		// 引数の個数が2個の時

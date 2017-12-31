@@ -17,7 +17,7 @@ public class Sub implements Subroutine{
 		SExpression car = ((ConsCell)sexp).getCar();
 		
 		// 引数1つ
-		if(((ConsCell)sexp).getSize() == 1) {
+		if(((ConsCell)sexp).size() == 1) {
 			// 引数が数値でない
 			if(!(car instanceof Number)) {
 				// エラー

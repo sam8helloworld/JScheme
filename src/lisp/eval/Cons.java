@@ -13,7 +13,7 @@ public class Cons implements Subroutine {
 		if(!(sexp instanceof ConsCell)) {
 			// エラー
 		}
-		if(!(((ConsCell)sexp).getSize() == 2)) {
+		if(!(((ConsCell)sexp).size() == 2)) {
 			// エラー
 		}
 		SExpression car = ((ConsCell)sexp).getCar();

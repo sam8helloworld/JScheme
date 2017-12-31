@@ -24,7 +24,7 @@ public class Map implements Subroutine {
 		
 		
 		int listsNum = arrayList.size();
-		int firstListSize = ((ConsCell)arrayList.get(0)).getSize();
+		int firstListSize = ((ConsCell)arrayList.get(0)).size();
 		for(int i=0;i<firstListSize;i++) {
 			ConsCell.ListBuilder tmp = ConsCell.builder();
 			boolean isEmpty = false;
@@ -33,7 +33,7 @@ public class Map implements Subroutine {
 				if(element instanceof EmptyList) {
 					isEmpty = true;
 				}
-				tmp.tail(element);System.out.println(element);
+				tmp.tail(element);
 			}
 			if(!isEmpty) {
 				argumentsList.add(tmp.build());

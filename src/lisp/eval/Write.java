@@ -18,7 +18,7 @@ public class Write implements Subroutine {
 			// エラー
 		}
 		// 引数の個数が1個でない時
-		if(((ConsCell)sexp).getSize() != 1) {
+		if(((ConsCell)sexp).size() != 1) {
 			// エラー
 		}
 		// 引数の個数が1個の時

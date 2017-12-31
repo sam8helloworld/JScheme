@@ -12,7 +12,7 @@ public class Define implements SpecialForm {
 		if(!(sexp instanceof ConsCell)) {
 			// エラー
 		}
-		if(((ConsCell)sexp).getSize() != 2) {
+		if(((ConsCell)sexp).size() != 2) {
 			// エラー
 		}
 		SExpression s1 = ((ConsCell)sexp).getCar();

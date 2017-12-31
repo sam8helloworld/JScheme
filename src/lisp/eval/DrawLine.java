@@ -13,7 +13,7 @@ public class DrawLine implements Subroutine {
 		if(!(sexp instanceof ConsCell)) {
 			// エラー
 		}
-		if(((ConsCell)sexp).getSize() != 5) {
+		if(((ConsCell)sexp).size() != 5) {
 			// エラー
 		}
 		Number[] elements = new Number[4];

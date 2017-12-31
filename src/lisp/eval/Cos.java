@@ -12,7 +12,7 @@ public class Cos implements Subroutine {
 		if(!(sexp instanceof ConsCell)) {
 			// エラー
 		}
-		if(((ConsCell)sexp).getSize() != 1) {
+		if(((ConsCell)sexp).size() != 1) {
 			// エラー
 		}
 		SExpression car = ((ConsCell)sexp).getCar();
