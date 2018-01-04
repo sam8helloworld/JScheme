@@ -30,6 +30,7 @@ import lisp.eval.If;
 import lisp.eval.Lambda;
 import lisp.eval.LessThan;
 import lisp.eval.LessThanOrEqual;
+import lisp.eval.Let;
 import lisp.eval.LispString;
 import lisp.eval.List;
 import lisp.eval.MakeCanvas;
@@ -103,6 +104,7 @@ public class Main {
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
 		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
+		environment.define(Symbol.getInstance("let"), Let.getInstance());
 		environment.define(Symbol.getInstance("if"), If.getInstance());
 		environment.define(Symbol.getInstance("set!"), Set.getInstance());
 		printGreetingMessage();
