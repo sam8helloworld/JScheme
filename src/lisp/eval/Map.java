@@ -35,11 +35,24 @@ public class Map implements Subroutine {
 				min = size;
 			}
 		}
+		
 		ConsCell.ListBuilder listBuilder = ConsCell.builder();
+		
+		// listsの要素数が1個の時
+		int listsSize = ((ConsCell)lists).size();
+		if(listsSize == 1) {
+			listBuilder.tail(proc);
+			SExpression list = ((ConsCell)lists).get(0);
+			for(int i=0;i<((ConsCell)list).size();i++) {
+				listBuilder.tail(((ConsCell)list).get(i));
+			}
+			return Evaluator.eval(listBuilder.build(), environment);
+		}
+				
 		for(int elNum=0;elNum<min;elNum++) {
 			ConsCell.ListBuilder listBuilderElement = ConsCell.builder();
 			listBuilderElement.tail(proc);
-			for(int listNum=0;listNum<((ConsCell)lists).size();listNum++) {
+			for(int listNum=0;listNum<listsSize;listNum++) {
 				// listNum個目のリストを取得
 				SExpression list = ((ConsCell)lists).get(listNum);
 				if(!(list instanceof ConsCell)) {
