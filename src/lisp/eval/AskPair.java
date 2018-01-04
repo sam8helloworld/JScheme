@@ -27,5 +27,8 @@ public class AskPair implements Subroutine {
 		}
 		return (((ConsCell)sexp).get(0) instanceof ConsCell)?Bool.valueOf(true):Bool.valueOf(false);
 	}
-	
+	@Override
+	public String toString() {
+		return "#<subr pair?>";
+	}
 }

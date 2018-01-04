@@ -27,5 +27,8 @@ public class AskNull implements Subroutine {
 		}
 		return (((ConsCell)sexp).get(0) instanceof EmptyList)?Bool.valueOf(true):Bool.valueOf(false);
 	}
-	
+	@Override
+	public String toString() {
+		return "#<subr null?>";
+	}
 }
