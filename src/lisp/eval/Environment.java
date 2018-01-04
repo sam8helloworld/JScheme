@@ -9,9 +9,9 @@ import java.util.Map;
  *
  */
 public class Environment {
-	private Map<Symbol, SExpression> frame = new HashMap<>();
+	private final Map<Symbol, SExpression> frame = new HashMap<>();
 	
-	private Environment next;
+	private final Environment next;
 	
 	public Environment(Environment next) {
 		this.next = next;
