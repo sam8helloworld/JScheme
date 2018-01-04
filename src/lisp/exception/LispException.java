@@ -6,8 +6,9 @@ package lisp.exception;
  *
  */
 @SuppressWarnings("serial")
-public class LispException extends Exception{
+public class LispException extends Exception {
+	private static final String PREFIX_MESSAGE = "*** ERROR: ";
 	LispException(String msg) {
-		super(msg);
+		super(PREFIX_MESSAGE+msg);
 	}
 }

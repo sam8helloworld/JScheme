@@ -1,5 +1,7 @@
 package lisp.eval;
 
+import lisp.exception.LispException;
+
 /**
  * Closure
  * @author sam0830
@@ -9,7 +11,7 @@ public class Closure implements SExpression {
 	private SExpression body;
 	private SExpression params;
 	
-	public SExpression apply(SExpression sexp, Environment environment) {
+	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 環境をもうひとつ作成
 		Environment env = new Environment(environment);
 		// 実引数と仮引数の個数が対応しているか確認

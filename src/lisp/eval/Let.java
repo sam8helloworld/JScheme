@@ -1,5 +1,7 @@
 package lisp.eval;
 
+import lisp.exception.LispException;
+
 /**
  * let
  * @author sam0830
@@ -15,7 +17,7 @@ public class Let implements SpecialForm{
 		return let;
 	}
 	@Override
-	public SExpression apply(SExpression sexp, Environment environment) {
+	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		if(!(sexp instanceof ConsCell)) {
 			throw new RuntimeException("引数");
 		}

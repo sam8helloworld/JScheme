@@ -1,5 +1,7 @@
 package lisp.eval;
 
+import lisp.exception.LispException;
+
 /**
  * Set!
  * @author sam0830
@@ -11,7 +13,7 @@ public class Set implements SpecialForm {
 		return set;
 	}
 	@Override
-	public SExpression apply(SExpression sexp, Environment environment) {
+	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 第一引数はSymbol
 		// 第一引数のSymbolが環境にあるとき第二引数を評価して代入
 		if(!(sexp instanceof ConsCell)) {

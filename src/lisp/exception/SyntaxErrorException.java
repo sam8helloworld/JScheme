@@ -6,7 +6,7 @@ package lisp.exception;
  *
  */
 @SuppressWarnings("serial")
-public class SyntaxErrorException extends LispException{
+public class SyntaxErrorException extends LispException {
 	private static final String prefix = "Syntax Error";
 	public SyntaxErrorException(String msg) {
 		super(prefix + ":" + msg);

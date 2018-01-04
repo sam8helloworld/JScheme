@@ -1,5 +1,7 @@
 package lisp.eval;
 
+import lisp.exception.LispException;
+
 /**
  * Define
  * @author sam0830
@@ -7,7 +9,7 @@ package lisp.eval;
  */
 public class Define implements SpecialForm {
 	private static final Define define = new Define();
-	public SExpression apply(SExpression sexp, Environment environment) {
+	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数が2個ではない時エラー
 		if(!(sexp instanceof ConsCell)) {
 			// エラー

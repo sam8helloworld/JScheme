@@ -1,5 +1,7 @@
 package lisp.eval;
 
+import lisp.exception.LispException;
+
 /**
  * Map
  * @author sam0830
@@ -8,7 +10,7 @@ package lisp.eval;
 public class Map implements Subroutine {	
 	private static final Map map = new Map();
 	
-	public SExpression apply(SExpression sexp, Environment environment) {
+	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数は必ず2個以上
 		if(!(sexp instanceof ConsCell)) {
 			// エラー

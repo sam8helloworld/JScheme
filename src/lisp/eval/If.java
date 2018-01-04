@@ -1,5 +1,7 @@
 package lisp.eval;
 
+import lisp.exception.LispException;
+
 /**
  * If
  * @author sam0830
@@ -11,7 +13,7 @@ public class If implements SpecialForm {
 		return lispIf;
 	}
 	@Override
-	public SExpression apply(SExpression sexp, Environment environment) {
+	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		if(!(sexp instanceof ConsCell)) {
 			// TODO エラー
 		}

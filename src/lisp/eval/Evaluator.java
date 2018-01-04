@@ -1,5 +1,7 @@
 package lisp.eval;
 
+import lisp.exception.LispException;
+
 /**
  * 評価器
  * @author sam0830
@@ -7,7 +9,7 @@ package lisp.eval;
  */
 public class Evaluator {
 	
-	private static SExpression evalArguments(SExpression sexp, Environment env) {
+	private static SExpression evalArguments(SExpression sexp, Environment env) throws LispException {
 		if(sexp instanceof EmptyList) {
 			return EmptyList.getInstance();
 		}
@@ -20,8 +22,9 @@ public class Evaluator {
 	 * @param sexp S式
 	 * @param env 環境
 	 * @return 評価値(S式)
+	 * @throws LispException 
 	 */
-	public static SExpression eval(SExpression sexp, Environment env) { 
+	public static SExpression eval(SExpression sexp, Environment env) throws LispException { 
 		// sexpが整数(/Int)の時
 		if(sexp instanceof Int) {
 			return sexp;
