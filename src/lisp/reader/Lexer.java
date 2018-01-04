@@ -101,7 +101,7 @@ public class Lexer {
 	 * @return 英数字以外に記号として使える文字ならtrue
 	 */
 	private boolean isSign(char ch) {
-		return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '=' || ch == '?' || ch == '"' || ch == '!';
+		return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '=' || ch == '?' || ch == '"' || ch == '!' || ch == '<' || ch == '>';
 	}
 
 	/**

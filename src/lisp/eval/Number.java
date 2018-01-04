@@ -10,4 +10,9 @@ public interface Number extends SExpression{
 	public Number sub(Number number);
 	public Number multiply(Number number);
 	public Number divide(Number number);
+	// TODO:Module
+	public boolean lessThan(Number number);
+	public boolean greaterThan(Number number);
+	public boolean lessThanOrEqual(Number number);
+	public boolean greaterThanOrEqual(Number number);
 }

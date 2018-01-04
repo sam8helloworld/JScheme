@@ -2,12 +2,8 @@ package lisp.reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import lisp.eval.Bool;
 import lisp.eval.ConsCell;
-import lisp.eval.EmptyList;
 import lisp.eval.Int;
 import lisp.eval.LispString;
 import lisp.eval.SExpression;

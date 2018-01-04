@@ -53,6 +53,26 @@ public class Int implements SExpression, Number {
 		}
 		return lisp.eval.Double.valueOf(value / ((lisp.eval.Double)number).getValue());
 	}
+	
+	public boolean lessThan(Number number) {
+		double comparedNumber = (number instanceof Int)?((Int)number).getValue():((lisp.eval.Double)number).getValue();
+		return (value < comparedNumber)?true:false;
+	}
+	
+	public boolean greaterThan(Number number) {
+		double comparedNumber = (number instanceof Int)?((Int)number).getValue():((lisp.eval.Double)number).getValue();
+		return (value > comparedNumber)?true:false;
+	}
+	
+	public boolean lessThanOrEqual(Number number) {
+		double comparedNumber = (number instanceof Int)?((Int)number).getValue():((lisp.eval.Double)number).getValue();
+		return (value <= comparedNumber)?true:false;
+	}
+	
+	public boolean greaterThanOrEqual(Number number) {
+		double comparedNumber = (number instanceof Int)?((Int)number).getValue():((lisp.eval.Double)number).getValue();
+		return (value >= comparedNumber)?true:false;
+	}
 
 	@Override
 	public String toString() {
