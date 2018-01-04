@@ -16,6 +16,7 @@ import lisp.eval.Cdr;
 import lisp.eval.Cons;
 import lisp.eval.Cos;
 import lisp.eval.Define;
+import lisp.eval.Display;
 import lisp.eval.Divide;
 import lisp.eval.DrawLine;
 import lisp.eval.Environment;
@@ -85,6 +86,7 @@ public class Main {
 		environment.define(Symbol.getInstance("="), EqualNumber.getInstance());
 		environment.define(Symbol.getInstance("eq?"), EqualAddress.getInstance());
 		environment.define(Symbol.getInstance("write"), Write.getInstance());
+		environment.define(Symbol.getInstance("display"), Display.getInstance());
 		environment.define(Symbol.getInstance("newline"), NewLine.getInstance());
 		environment.define(Symbol.getInstance("exit"), Exit.getInstance());
 		environment.define(Symbol.getInstance("sin"), Sin.getInstance());
