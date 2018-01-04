@@ -26,7 +26,12 @@ public class Display implements Subroutine {
 			// エラー
 		}
 		// 引数の個数が1個の時
-		System.out.println(((ConsCell)sexp).getCar());
+		SExpression s = ((ConsCell)sexp).getCar();
+		if(s instanceof LispString) {
+			System.out.print(((LispString)s).getString());
+		} else {
+			System.out.print(s);
+		}
 		return Undef.getInstance();
 	}
 

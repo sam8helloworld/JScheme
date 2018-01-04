@@ -146,10 +146,6 @@ public class Main {
 					System.out.print("lisp> ");
 					SExpression exp = reader.read();
 					SExpression value = Evaluator.eval(exp, environment);
-					if(value instanceof LispString) {
-						System.out.println("\""+value+"\"");
-						continue;
-					}
 					System.out.println(value);
 				} catch (EndOfFileException e) {
 					break;

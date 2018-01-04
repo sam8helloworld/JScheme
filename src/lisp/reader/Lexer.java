@@ -173,25 +173,24 @@ public class Lexer {
 			throw new SyntaxErrorException("Invalid # constant");
 		}
 		
-		// ' " ' 文字列
 		if(ch == '"') {
 			StringBuffer stringBuffer = new StringBuffer();
+			updateNextChar();
+			ch = this.nextChar;
 			while(isSymbolChar(ch)){
-				stringBuffer.append(ch);
-				updateNextChar();
-				ch = this.nextChar;	
-				// 次の文字が空白文字かつ最後に読み込んだ文字がダブルクォーテーション
-				if(isWhiteSpaceChar(ch) && stringBuffer.charAt(stringBuffer.length()-1) == '"') {
-					stringBuffer.deleteCharAt(stringBuffer.length()-1);
-					stringBuffer.deleteCharAt(0);
+				if(ch == '"') {
 					break;
 				}
+				stringBuffer.append(ch);
+				updateNextChar();
+				ch = this.nextChar;
 			}
 			String stringSequence = stringBuffer.toString();
+			updateNextChar();
 			return new Token(stringSequence, 0);
 		}
 
-		// 整数値 or 実数 or 記号 or 文字列
+		// 整数値 or 実数 or 記号
 		if (isSymbolChar(ch)) {
 			boolean maybeRealNumber = false;
 			StringBuffer stringBuffer = new StringBuffer();

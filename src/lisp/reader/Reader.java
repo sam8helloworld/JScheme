@@ -135,51 +135,6 @@ public class Reader {
 				}
 				listBuilder.tail(car);
 			}
-			/*
-			List<SExpression> sList = new ArrayList<SExpression>();
-			while(true) {
-				// 右括弧
-				if (this.token.getKind() == Token.Kind.RIGHTPAR) {
-					this.nestingLevel--;
-					if (this.nestingLevel != 0) { // 式が未完成
-						this.token = this.lexer.getNextToken();
-					}
-					// 空リスト
-					if(sList.isEmpty()) {
-						return EmptyList.getInstance();
-					}
-					// リスト
-					ConsCell consCell = ConsCell.getInstance(sList.remove(0), EmptyList.getInstance());
-					ConsCell tmp = consCell;
-					//TODO:sList走査
-					for(SExpression sexp : sList) {
-							tmp.setCdr(ConsCell.getInstance(sexp, EmptyList.getInstance()));
-							tmp = (ConsCell) tmp.getCdr();
-					}
-					return consCell;
-				}
-				
-				// car
-				SExpression car = sExpression();
-				
-				// ドット対
-				if (this.token.getKind() == Token.Kind.DOT) {
-					this.token = this.lexer.getNextToken();
-					// cdr
-					SExpression cdr = sExpression();
-					if (this.token.getKind() != Token.Kind.RIGHTPAR) {
-						throw new SyntaxErrorException("')' expected");
-					}
-					this.nestingLevel--;
-					if (this.nestingLevel != 0) { // 式が未完成
-						this.token = this.lexer.getNextToken();
-					}
-					return ConsCell.getInstance(car, cdr);
-				}
-				// S式の次の軸がドットでない(/S式のループ)
-				sList.add(car);
-			}
-			*/
 		}
 		
 		throw new SyntaxErrorException("Invalid expression:" + this.token.getKind());

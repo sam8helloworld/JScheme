@@ -22,7 +22,7 @@ public class LispString implements SExpression {
 	
 	@Override
 	public String toString() {
-		return this.string;
+		return "\""+this.string+"\"";
 	}
 	
 	@Override
