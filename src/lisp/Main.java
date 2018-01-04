@@ -10,6 +10,7 @@ import lisp.eval.Add;
 import lisp.eval.Append;
 import lisp.eval.AskList;
 import lisp.eval.AskNull;
+import lisp.eval.AskPair;
 import lisp.eval.Car;
 import lisp.eval.Cdr;
 import lisp.eval.Cons;
@@ -96,6 +97,7 @@ public class Main {
 		environment.define(Symbol.getInstance(">="), GreaterThanOrEqual.getInstance());
 		environment.define(Symbol.getInstance("null?"), AskNull.getInstance());
 		environment.define(Symbol.getInstance("list?"), AskList.getInstance());
+		environment.define(Symbol.getInstance("pair?"), AskPair.getInstance());
 		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
 		environment.define(Symbol.getInstance("define"), Define.getInstance());
 		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
