@@ -33,7 +33,7 @@ public class Closure implements SExpression {
 			for(int i=0;i<requiredSize;i++) {
 				SExpression symbol = ((ConsCell)params).get(i);
 				if(!(symbol instanceof Symbol)) {
-					throw new ArgumentException("symbol required: "+symbol);
+					throw new ArgumentException("symbol required, but got "+symbol);
 				}
 				env.define((Symbol)symbol, ((ConsCell)sexp).get(i));
 			}
