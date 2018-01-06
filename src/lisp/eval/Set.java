@@ -1,9 +1,10 @@
 package lisp.eval;
 
 import lisp.exception.LispException;
+import lisp.exception.SyntaxErrorException;
 
 /**
- * Set!
+ * set!
  * @author sam0830
  *
  */
@@ -16,19 +17,27 @@ public class Set implements SpecialForm {
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 第一引数はSymbol
 		// 第一引数のSymbolが環境にあるとき第二引数を評価して代入
+		ConsCell.ListBuilder errorListBuilder = ConsCell.builder();
+		errorListBuilder.tail(Symbol.getInstance("set!"));
 		if(!(sexp instanceof ConsCell)) {
-			// エラー
+			throw new SyntaxErrorException("malformed set!: "+errorListBuilder.build().toString());
 		}
 		if(((ConsCell)sexp).size() != 2) {
-			// エラー
+			errorListBuilder.last(sexp);
+			throw new SyntaxErrorException("malformed set!: "+errorListBuilder.build().toString());
 		}
 		SExpression symbol = ((ConsCell)sexp).getCar();
 		if(!(symbol instanceof Symbol)) {
-			// エラー
+			errorListBuilder.last(sexp);
+			throw new SyntaxErrorException("malformed set!: "+errorListBuilder.build().toString());
 		}
 		SExpression exp = ((ConsCell)sexp).get(1);
 		environment.set((Symbol)symbol, Evaluator.eval(exp, environment));
 		return exp;
 	}
 	
+	@Override
+	public String toString() {
+		return "#<syntax set!>";
+	}
 }
