@@ -1,6 +1,7 @@
 package lisp.eval;
 
 import lisp.exception.LispException;
+import lisp.exception.SyntaxErrorException;
 
 /**
  * Define
@@ -11,11 +12,14 @@ public class Define implements SpecialForm {
 	private static final Define define = new Define();
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数が2個ではない時エラー
+		ConsCell.ListBuilder errorListBuilder = ConsCell.builder();
+		errorListBuilder.tail(Symbol.getInstance("define"));
 		if(!(sexp instanceof ConsCell)) {
-			// エラー
+			throw new SyntaxErrorException(errorListBuilder.build().toString());
 		}
 		if(((ConsCell)sexp).size() != 2) {
-			// エラー
+			errorListBuilder.last(sexp);
+			throw new SyntaxErrorException(errorListBuilder.build().toString());
 		}
 		SExpression s1 = ((ConsCell)sexp).getCar();
 		SExpression s2 = ((ConsCell)((ConsCell)sexp).getCdr()).getCar();
