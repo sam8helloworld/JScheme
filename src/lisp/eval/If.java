@@ -1,6 +1,7 @@
 package lisp.eval;
 
 import lisp.exception.LispException;
+import lisp.exception.SyntaxErrorException;
 
 /**
  * If
@@ -14,8 +15,10 @@ public class If implements SpecialForm {
 	}
 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
+		ConsCell.ListBuilder errorListBuilder = ConsCell.builder();
+		errorListBuilder.tail(Symbol.getInstance("if"));
 		if(!(sexp instanceof ConsCell)) {
-			// TODO エラー
+			throw new SyntaxErrorException("malformed if: "+errorListBuilder.build().toString());
 		}
 		// 引数が3個ある時(predicate then else)
 		// 第一引数の評価結果が#f以外ならthen
@@ -51,7 +54,11 @@ public class If implements SpecialForm {
 			SExpression thenExpression = ((ConsCell)((ConsCell)sexp).getCdr()).getCar();
 			return Evaluator.eval(thenExpression, environment);
 		}
-		// エラー
-		return null;
+		errorListBuilder.last(sexp);
+		throw new SyntaxErrorException("malformed if: "+errorListBuilder.build().toString());
+	}
+	@Override 
+	public String toString() {
+		return "#<syntax if>";
 	}
 }

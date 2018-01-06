@@ -15,11 +15,11 @@ public class Define implements SpecialForm {
 		ConsCell.ListBuilder errorListBuilder = ConsCell.builder();
 		errorListBuilder.tail(Symbol.getInstance("define"));
 		if(!(sexp instanceof ConsCell)) {
-			throw new SyntaxErrorException(errorListBuilder.build().toString());
+			throw new SyntaxErrorException("malformed define: "+errorListBuilder.build().toString());
 		}
 		if(((ConsCell)sexp).size() != 2) {
 			errorListBuilder.last(sexp);
-			throw new SyntaxErrorException(errorListBuilder.build().toString());
+			throw new SyntaxErrorException("malformed define: "+errorListBuilder.build().toString());
 		}
 		SExpression s1 = ((ConsCell)sexp).getCar();
 		SExpression s2 = ((ConsCell)((ConsCell)sexp).getCdr()).getCar();
