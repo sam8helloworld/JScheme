@@ -17,4 +17,9 @@ public class Quote implements SpecialForm {
 	public static Quote getInstance() {
 		return quote;
 	}
+	
+	@Override
+	public String toString() {
+		return "#<syntax quote>";
+	}
 }
