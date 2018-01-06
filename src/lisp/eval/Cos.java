@@ -31,4 +31,9 @@ public class Cos implements Subroutine {
 	public static Cos getInstance() {
 		return cos;
 	}
+	
+	@Override
+	public String toString() {
+		return "#<subr cos>";
+	}
 }
