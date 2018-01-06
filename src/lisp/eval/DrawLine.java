@@ -1,5 +1,8 @@
 package lisp.eval;
 
+import lisp.exception.ArgumentException;
+import lisp.exception.LispException;
+
 /**
  * DrawLine
  * @author sam0830
@@ -8,25 +11,26 @@ package lisp.eval;
 public class DrawLine implements Subroutine {
 	private static final DrawLine drawLine = new DrawLine();
 	
-	public SExpression apply(SExpression sexp, Environment environment) {
+	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数の型は(Number, Number, Number, Number, Canvas)
 		if(!(sexp instanceof ConsCell)) {
-			// エラー
+			throw new ArgumentException("wrong number of arguments for "+this+" (required 5, got 0)");
 		}
-		if(((ConsCell)sexp).size() != 5) {
-			// エラー
+		int size = ((ConsCell)sexp).size();
+		if(size != 5) {
+			throw new ArgumentException("wrong number of arguments for "+this+" (required 1, got "+size+")");
 		}
 		Number[] elements = new Number[4];
 		for(int i =0;i<4;i++) {
 			SExpression element = ((ConsCell)sexp).get(i);
 			if(!(element instanceof Number)) {
-				// エラー
+				throw new ArgumentException("operation draw-line is not defined on object "+element);
 			}
 			elements[i] = (Number)element;
 		}
 		SExpression canvas = ((ConsCell)sexp).get(4);
 		if(!(canvas instanceof Canvas)) {
-			// エラー
+			throw new ArgumentException("operation draw-line is not defined on object "+canvas);
 		}
 		((Canvas)canvas).drawLine(elements[0], elements[1], elements[2], elements[3]);
 		return Bool.valueOf(true);
@@ -34,5 +38,10 @@ public class DrawLine implements Subroutine {
 	
 	public static DrawLine getInstance() {
 		return drawLine;
+	}
+	
+	@Override
+	public String toString() {
+		return "#<subr draw-line>";
 	}
 }
