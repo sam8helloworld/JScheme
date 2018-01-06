@@ -6,12 +6,23 @@ import java.awt.Rectangle;
 import javax.swing.JFrame;
 
 /**
- * Canvas
+ * 画面描画用のクラス
+ * SwingをUIとして採用している
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Canvas extends JFrame implements SExpression {
 	private Rectangle rectangle;
+	
+	/**
+	 * Canvasのコンストラクタ
+	 * 描画用画面の左上の座標と
+	 * 幅と高さを設定する
+	 * @param x 描画用画面左上の座標のx座標
+	 * @param y 描画用画面左上の座標のx座標
+	 * @param width 描画用画面の幅
+	 * @param height 描画用画面の高さ
+	 */
 	private Canvas(Number x, Number y, Number width, Number height) {
 		int xPos = (x instanceof Int)?((Int)x).getValue():(((lisp.eval.Double)x).getValue()).intValue();
 		int yPos = (y instanceof Int)?((Int)y).getValue():(((lisp.eval.Double)y).getValue()).intValue();
@@ -20,19 +31,39 @@ public class Canvas extends JFrame implements SExpression {
 		rectangle = new Rectangle();
 		this.rectangle.setBounds(xPos, yPos, windowWidth, windowHeight);
 		setBounds(this.rectangle);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setAlwaysOnTop(true);
 	    setVisible(true);
 	}
 	
+	/**
+	 * 描画用画面の座標と幅・高さを
+	 * Rectangleで取得
+	 * @return 描画用画面の情報
+	 */
 	public Rectangle getValue() {
 		return this.rectangle;
 	}
 	
+	/**
+	 * 指定された座標・幅・高さのCanvasを返す
+	 * @param x 描画用画面左上の座標のx座標
+	 * @param y 描画用画面左上の座標のx座標
+	 * @param width 描画用画面の幅
+	 * @param height 描画用画面の高さ
+	 * @return Canvasのインスタンス
+	 */
 	public static Canvas getInstance(Number x, Number y, Number width, Number height) {
 		return new Canvas(x, y, width, height);
 	}
 	
+	/**
+	 * 指定された座標(x1, y1)から(x2, y2)に線を引く
+	 * @param x1 始点のx座標
+	 * @param y1 始点のy座標
+	 * @param x2 終点のx座標
+	 * @param y2 終点のy座標
+	 */
 	public void drawLine(Number x1, Number y1, Number x2, Number y2) {
 		int x1Pos = (x1 instanceof Int)?((Int)x1).getValue():(((lisp.eval.Double)x1).getValue()).intValue();
 		int y1Pos = (y1 instanceof Int)?((Int)y1).getValue():(((lisp.eval.Double)y1).getValue()).intValue();
