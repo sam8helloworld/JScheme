@@ -4,16 +4,22 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * pair?
+ * 引数が空リスト以外のリストかどうかを判別する
+ * コマンド名はpair?
  * @author sam0830
- *
+ * @version 1.0
  */
 public class AskPair implements Subroutine {
 	private static final AskPair askPair = new AskPair();
 	
+	/**
+	 * AskPairのインスタンスを返す
+	 * @return 組み込み手続きAskPair
+	 */
 	public static AskPair getInstance() {
 		return askPair;
 	}
+	
 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数が空リストかどうか
@@ -27,6 +33,7 @@ public class AskPair implements Subroutine {
 		}
 		return (((ConsCell)sexp).get(0) instanceof ConsCell)?Bool.valueOf(true):Bool.valueOf(false);
 	}
+	
 	@Override
 	public String toString() {
 		return "#<subr pair?>";
