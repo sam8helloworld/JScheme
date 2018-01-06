@@ -1,5 +1,8 @@
 package lisp.eval;
 
+import lisp.exception.ArgumentException;
+import lisp.exception.LispException;
+
 /**
  * MakeCanvas
  * @author sam0830
@@ -10,24 +13,21 @@ public class MakeCanvas implements Subroutine {
 	private static final Int STANDARD_SIZE = Int.valueOf(400);
 	private static final MakeCanvas makeCanvas = new MakeCanvas();
 	
-	public SExpression apply(SExpression sexp, Environment environment) {
+	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数無しの時は自動でサイズ決定
 		if(sexp instanceof EmptyList) {
 			return Canvas.getInstance(STANDARD_POSITION, STANDARD_POSITION, STANDARD_SIZE, STANDARD_SIZE);
 		}
 		// 引数ありの時はNumber型で4つが必須
-		if(!(sexp instanceof ConsCell)) {
-			// エラー
-		}
 		int size = ((ConsCell)sexp).size();
 		if(size != 4) {
-			// エラー
+			throw new ArgumentException("wrong number of arguments for "+this+" (required 4, got "+size+")");
 		}
 		Number[] value = new Number[4];
 		for(int i=0;i<size;i++) {
 			SExpression tmp = ((ConsCell)sexp).get(i);
 			if(!(tmp instanceof Number)) {
-				// エラー
+				throw new ArgumentException("operation make-canvas is not defined on object "+tmp);
 			}
 			value[i] = (Number)tmp;
 		}
@@ -36,5 +36,10 @@ public class MakeCanvas implements Subroutine {
 	
 	public static MakeCanvas getInstance() {
 		return makeCanvas;
+	}
+	
+	@Override
+	public String toString() {
+		return "#<subr make-canvas>";
 	}
 }
