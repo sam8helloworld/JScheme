@@ -1,5 +1,6 @@
 package lisp.eval;
 
+import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
@@ -13,7 +14,7 @@ public class Map implements Subroutine {
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数は必ず2個以上
 		if(!(sexp instanceof ConsCell)) {
-			// エラー
+			throw new ArgumentException("wrong number of arguments for "+this+" (required 2, got 0)");
 		}
 		SExpression proc = ((ConsCell)sexp).getCar();
 		SExpression lists = ((ConsCell)sexp).getCdr();
@@ -23,10 +24,10 @@ public class Map implements Subroutine {
 		for(int i=0;i<((ConsCell)lists).size();i++) {
 			SExpression tmpList = ((ConsCell)lists).get(i);
 			if(!(tmpList instanceof ConsCell)) {
-				throw new RuntimeException("リスト以外が引数にある");
+				throw new ArgumentException("argument lists contained an improper list");
 			}
 			if(!((ConsCell)tmpList).isList()) {
-				throw new RuntimeException("リスト以外が引数にある");
+				throw new ArgumentException("argument lists contained an improper list");
 			}
 			int size = ((ConsCell)tmpList).size();
 			if(min == -1) {
@@ -58,7 +59,7 @@ public class Map implements Subroutine {
 				// listNum個目のリストを取得
 				SExpression list = ((ConsCell)lists).get(listNum);
 				if(!(list instanceof ConsCell)) {
-					throw new RuntimeException("リスト以外が引数にある");
+					throw new ArgumentException("argument lists contained an improper list");
 				}
 				// listNum個目のリストのelNum番目の要素を取得
 				SExpression element = ((ConsCell)list).get(elNum);
@@ -73,5 +74,10 @@ public class Map implements Subroutine {
 	
 	public static Map getInstance() {
 		return map;
+	}
+	
+	@Override
+	public String toString() {
+		return "#<subr map>";
 	}
 }
