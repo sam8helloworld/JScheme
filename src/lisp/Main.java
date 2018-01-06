@@ -31,7 +31,6 @@ import lisp.eval.Lambda;
 import lisp.eval.LessThan;
 import lisp.eval.LessThanOrEqual;
 import lisp.eval.Let;
-import lisp.eval.LispString;
 import lisp.eval.List;
 import lisp.eval.MakeCanvas;
 import lisp.eval.Map;
@@ -49,13 +48,62 @@ import lisp.exception.LispException;
 import lisp.reader.Reader;
 
 /**
- * Mainクラス
+ * mainメソッドを含むクラス
+ * 一番はじめに呼ばれるクラス
  * 
  * @author sam0830
  * @version 1.0
+ * 
  */
 public class Main {
-	static void printGreetingMessage() {
+	private static final Environment ENVIRONMENT = new Environment(null);
+	
+	// 組み込み手続きの初期化
+	static {
+		ENVIRONMENT.define(Symbol.getInstance("car"), Car.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("cdr"), Cdr.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("list"), List.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("append"), Append.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("cons"), Cons.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("+"), Add.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("-"), Sub.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("*"), Multiply.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("/"), Divide.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("map"), Map.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("="), EqualNumber.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("eq?"), EqualAddress.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("write"), Write.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("display"), Display.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("newline"), NewLine.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("exit"), Exit.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("sin"), Sin.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("cos"), Cos.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("make-canvas"), MakeCanvas.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("draw-line"), DrawLine.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("<"), LessThan.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance(">"), GreaterThan.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("<="), LessThanOrEqual.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance(">="), GreaterThanOrEqual.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("null?"), AskNull.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("list?"), AskList.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("pair?"), AskPair.getInstance());	
+	}
+	
+	// 特殊形式の初期化
+	static {
+		ENVIRONMENT.define(Symbol.getInstance("quote"), Quote.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("define"), Define.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("lambda"), Lambda.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("let"), Let.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("if"), If.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("set!"), Set.getInstance());
+	}
+	
+	/**
+	 * 対話が始まった際の挨拶
+	 * 著作者情報などを表示
+	 */
+	private static void printGreetingMessage() {
 		System.out.println("  _      _           ");
 		System.out.println(" | |    (_)          ");
 		System.out.println(" | |     _ ___ _ __  ");
@@ -71,81 +119,57 @@ public class Main {
 		System.out.println("");
 		System.out.println("Type :h and hit Enter for context help.");
 	}
-
+	
+	/**
+	 * バッチ処理を行う
+	 * @param fileName コマンドライン引数で入力されたファイル名
+	 */
+	private static void processBatch(String fileName) {
+		try {
+			File file = new File(fileName);
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+			Reader reader = new Reader(bufferedReader);
+			while(true) {
+				try {
+					SExpression exp = reader.read();
+					SExpression value = Evaluator.eval(exp, ENVIRONMENT);
+					System.out.println(value);
+				} catch (EndOfFileException e) {
+					break;
+				} catch (LispException e) {
+					System.err.println(e.getMessage());
+				}
+			}
+			bufferedReader.close();
+			return;
+		} catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	/**
+	 * mainメソッド
+	 * @param args コマンドライン引数
+	 * @throws IOException 
+	 */
 	public static void main(String[] args) throws IOException {
-		Environment environment = new Environment(null);
-		environment.define(Symbol.getInstance("car"), Car.getInstance());
-		environment.define(Symbol.getInstance("cdr"), Cdr.getInstance());
-		environment.define(Symbol.getInstance("list"), List.getInstance());
-		environment.define(Symbol.getInstance("append"), Append.getInstance());
-		environment.define(Symbol.getInstance("cons"), Cons.getInstance());
-		environment.define(Symbol.getInstance("+"), Add.getInstance());
-		environment.define(Symbol.getInstance("-"), Sub.getInstance());
-		environment.define(Symbol.getInstance("*"), Multiply.getInstance());
-		environment.define(Symbol.getInstance("/"), Divide.getInstance());
-		environment.define(Symbol.getInstance("map"), Map.getInstance());
-		environment.define(Symbol.getInstance("="), EqualNumber.getInstance());
-		environment.define(Symbol.getInstance("eq?"), EqualAddress.getInstance());
-		environment.define(Symbol.getInstance("write"), Write.getInstance());
-		environment.define(Symbol.getInstance("display"), Display.getInstance());
-		environment.define(Symbol.getInstance("newline"), NewLine.getInstance());
-		environment.define(Symbol.getInstance("exit"), Exit.getInstance());
-		environment.define(Symbol.getInstance("sin"), Sin.getInstance());
-		environment.define(Symbol.getInstance("cos"), Cos.getInstance());
-		environment.define(Symbol.getInstance("make-canvas"), MakeCanvas.getInstance());
-		environment.define(Symbol.getInstance("draw-line"), DrawLine.getInstance());
-		environment.define(Symbol.getInstance("<"), LessThan.getInstance());
-		environment.define(Symbol.getInstance(">"), GreaterThan.getInstance());
-		environment.define(Symbol.getInstance("<="), LessThanOrEqual.getInstance());
-		environment.define(Symbol.getInstance(">="), GreaterThanOrEqual.getInstance());
-		environment.define(Symbol.getInstance("null?"), AskNull.getInstance());
-		environment.define(Symbol.getInstance("list?"), AskList.getInstance());
-		environment.define(Symbol.getInstance("pair?"), AskPair.getInstance());
-		environment.define(Symbol.getInstance("quote"), Quote.getInstance());
-		environment.define(Symbol.getInstance("define"), Define.getInstance());
-		environment.define(Symbol.getInstance("lambda"), Lambda.getInstance());
-		environment.define(Symbol.getInstance("let"), Let.getInstance());
-		environment.define(Symbol.getInstance("if"), If.getInstance());
-		environment.define(Symbol.getInstance("set!"), Set.getInstance());
 		printGreetingMessage();
 		
-		BufferedReader bufferedReader;
-		Reader reader;
+		// コマンドライン引数あり
 		if(args.length != 0) {
-			try {
-				File file = new File(args[0]);
-				bufferedReader = new BufferedReader(new FileReader(file));
-				reader = new Reader(bufferedReader);
-				while(true) {
-					try {
-						SExpression exp = reader.read();
-						SExpression value = Evaluator.eval(exp, environment);
-						if(value instanceof LispString) {
-							System.out.println("\""+value+"\"");
-							continue;
-						}
-						System.out.println(value);
-					} catch (EndOfFileException e) {
-						break;
-					} catch (LispException e) {
-						System.err.println(e.getMessage());
-					}
-				}
-				bufferedReader.close();
-				return;
-			} catch(Exception e) {
-				System.out.println(e);
-			}
+			processBatch(args[0]);
+			return;
 		}
 		
-		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-		reader = new Reader(bufferedReader);
+		// コマンドライン引数なし
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		Reader reader = new Reader(bufferedReader);
 		try {
 			while(true) {
 				try {
 					System.out.print("lisp> ");
 					SExpression exp = reader.read();
-					SExpression value = Evaluator.eval(exp, environment);
+					SExpression value = Evaluator.eval(exp, ENVIRONMENT);
 					System.out.println(value);
 				} catch (EndOfFileException e) {
 					System.err.println(e.getMessage());
@@ -160,6 +184,6 @@ public class Main {
 		}
 		
 		bufferedReader.close();
+		return;
 	}
-
 }
