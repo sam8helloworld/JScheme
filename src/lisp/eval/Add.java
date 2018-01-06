@@ -31,10 +31,10 @@ public class Add implements Subroutine {
 			if(!(arg instanceof Number)) {
 				if(i==0) {
 					// 引数が数字でない時エラー
-					throw new ArgumentException("operation " + this+ " is not defined between "+arg+" and "+((ConsCell)sexp).get(1));
+					throw new ArgumentException("operation + is not defined between "+arg+" and "+((ConsCell)sexp).get(1));
 				}
 				// 引数が数字でない時エラー
-				throw new ArgumentException("operation " + this+ " is not defined between "+number+" and "+arg);
+				throw new ArgumentException("operation + is not defined between "+number+" and "+arg);
 			}
 			// 引数が数値
 			number = number.add((Number)arg);
@@ -48,6 +48,6 @@ public class Add implements Subroutine {
 	
 	@Override
 	public String toString() {
-		return "+";
+		return "#<subr +>";
 	}
 }
