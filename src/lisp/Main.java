@@ -148,6 +148,7 @@ public class Main {
 					SExpression value = Evaluator.eval(exp, environment);
 					System.out.println(value);
 				} catch (EndOfFileException e) {
+					System.err.println(e.getMessage());
 					break;
 				} catch (LispException e) {
 					System.err.println(e.getMessage());
