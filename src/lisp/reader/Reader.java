@@ -98,7 +98,10 @@ public class Reader {
 		// '(クォート)
 		if(this.token.getKind() == Token.Kind.QUOTE) {
 			this.token = this.lexer.getNextToken();
-			return sExpression();
+			ConsCell.ListBuilder listBuilder = ConsCell.builder();
+			listBuilder.tail(Symbol.getInstance("quote"));
+			listBuilder.tail(sExpression());
+			return listBuilder.build();
 		}
 		
 		// '(' ')' or '(' <S式> . <S式> ')' or '(' <S式> <S式> ...<S式> ')'
