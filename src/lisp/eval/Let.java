@@ -1,6 +1,7 @@
 package lisp.eval;
 
 import lisp.exception.LispException;
+import lisp.exception.SyntaxErrorException;
 
 /**
  * let
@@ -10,7 +11,7 @@ import lisp.exception.LispException;
 public class Let implements SpecialForm{
 	private static final int BINDS_SIZE = 2;
 	private static final int DAMMY_ARGUMENT_NUMBER = 0;
-	private static final int ACTUAL_ARGUMENT_NUMBER = 0;
+	private static final int ACTUAL_ARGUMENT_NUMBER = 1;
 	private static final Let let = new Let();
 	
 	public static Let getInstance() {
@@ -18,8 +19,10 @@ public class Let implements SpecialForm{
 	}
 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
+		ConsCell.ListBuilder errorListBuilder = ConsCell.builder();
+		errorListBuilder.tail(Symbol.getInstance("let"));
 		if(!(sexp instanceof ConsCell)) {
-			throw new RuntimeException("引数");
+			throw new SyntaxErrorException("malformed let: "+errorListBuilder.build().toString());
 		}
 		SExpression binds = ((ConsCell)sexp).getCar();
 		SExpression body = EmptyList.getInstance();
@@ -27,7 +30,8 @@ public class Let implements SpecialForm{
 			body = ((ConsCell)sexp).get(1);
 		}
 		if(!(binds instanceof ConsCell)) {
-			throw new RuntimeException("引数がリストでない");
+			errorListBuilder.last(sexp);
+			throw new SyntaxErrorException("malformed let: "+errorListBuilder.build().toString());
 		}
 		int listSize = ((ConsCell)binds).size();
 		ConsCell.ListBuilder dammyArg = ConsCell.builder();
@@ -35,10 +39,12 @@ public class Let implements SpecialForm{
 		for(int i=0;i<listSize;i++) {
 			SExpression list = ((ConsCell)binds).get(i);
 			if(!(list instanceof ConsCell)) {
-				throw new RuntimeException("引数がリストでない");
+				errorListBuilder.last(sexp);
+				throw new SyntaxErrorException("malformed let: "+errorListBuilder.build().toString());
 			}
 			if(((ConsCell)list).size() != BINDS_SIZE) {
-				throw new RuntimeException("引数が2個でない");
+				errorListBuilder.last(sexp);
+				throw new SyntaxErrorException("malformed let: "+errorListBuilder.build().toString());
 			}
 			dammyArg.tail(((ConsCell)list).get(DAMMY_ARGUMENT_NUMBER));
 			actualArg.tail(((ConsCell)list).get(ACTUAL_ARGUMENT_NUMBER));
@@ -52,5 +58,9 @@ public class Let implements SpecialForm{
 		listBuilder.last(actualArg.build());
 		return Evaluator.eval(listBuilder.build(), environment);
 	}
-
+	
+	@Override
+	public String toString() {
+		return "#<syntax let>";
+	}
 }
