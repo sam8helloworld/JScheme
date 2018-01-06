@@ -4,16 +4,22 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * list?
+ * 引数がリストかどうかを判別する
+ * コマンド名はlist?
  * @author sam0830
- *
+ * @version 1.0
  */
 public class AskList implements Subroutine {
 	private static final AskList askList = new AskList();
 	
+	/**
+	 * AskListのインスタンスを返す
+	 * @return 組み込み手続きAskList
+	 */
 	public static AskList getInstance() {
 		return askList;
 	}
+	
 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数が空リストかどうか
@@ -32,6 +38,7 @@ public class AskList implements Subroutine {
 		}
 		return ((ConsCell)arg).isList()?Bool.valueOf(true):Bool.valueOf(false);
 	}
+	
 	@Override
 	public String toString() {
 		return "#<subr list?>";
