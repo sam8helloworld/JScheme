@@ -1,5 +1,8 @@
 package lisp.eval;
 
+import lisp.exception.ArgumentException;
+import lisp.exception.LispException;
+
 /**
  * 整数値
  * @author sam0830
@@ -42,16 +45,16 @@ public class Double implements SExpression, Number {
 		return valueOf(value * ((lisp.eval.Double)number).getValue());
 	}
 	
-	public Number divide(Number number) {
+	public Number divide(Number number) throws LispException {
 		
 		if(number instanceof Int) {
 			if(((Int)number).getValue() == 0) {
-				// エラー
+				throw new ArgumentException("attempt to calculate a division by zero");
 			}
 			return valueOf(value / ((Int)number).getValue());
 		}
 		if(((lisp.eval.Double)number).getValue() == 0) {
-			// エラー
+			throw new ArgumentException("attempt to calculate a division by zero");
 		}
 		return valueOf(value / ((lisp.eval.Double)number).getValue());
 	}
