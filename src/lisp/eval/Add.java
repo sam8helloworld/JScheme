@@ -4,13 +4,22 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * Add (加法)
+ * 足し算をする組み込み手続き
  * @author sam0830
- *
+ *　@version 1.0
  */
 public class Add implements Subroutine {
 	private static final Add add = new Add();
 	
+	/**
+	 * Addのインスタンスを返す
+	 * @return 組み込み手続きAdd
+	 */
+	public static Add getInstance() {
+		return add;
+	}
+	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		Number number = Int.valueOf(0);
 		// 引数なし
@@ -40,10 +49,6 @@ public class Add implements Subroutine {
 			number = number.add((Number)arg);
 		}
 		return number;
-	}
-	
-	public static Add getInstance() {
-		return add;
 	}
 	
 	@Override
