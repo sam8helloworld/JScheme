@@ -1,5 +1,8 @@
 package lisp.eval;
 
+import lisp.exception.ArgumentException;
+import lisp.exception.LispException;
+
 /**
  * 数値比較(=)
  * @author sam0830
@@ -8,25 +11,25 @@ package lisp.eval;
 public class EqualNumber implements Subroutine {
 	private static final EqualNumber equalNumber = new EqualNumber();
 	
-	public SExpression apply(SExpression sexp, Environment environment) { 
+	public SExpression apply(SExpression sexp, Environment environment) throws LispException { 
 		// 引数が2つ以上でないときエラー
 		if(!(sexp instanceof ConsCell)) {
-			throw new RuntimeException("引数が足りない");
+			throw new ArgumentException("wrong number of arguments for "+this+" (required 2, got 0)");
 		}
 		int size = ((ConsCell)sexp).size();
 		if(size < 2) {
-			throw new RuntimeException("引数が足りない");
+			throw new ArgumentException("wrong number of arguments for "+this+" (required 1, got "+size+")");
 		}
 		SExpression arg = ((ConsCell)sexp).getCar();
 		if(!(arg instanceof Number)) {
-			throw new RuntimeException("引数が数字でない");
+			throw new ArgumentException("real number required: "+arg);
 		}
 		
 		double comparedNumber = (arg instanceof Int)?((Int)arg).getValue():((lisp.eval.Double)arg).getValue();
 		for(int i=1;i<size;i++) {
 			SExpression tmp = ((ConsCell)sexp).get(i);
 			if(!(tmp instanceof Number)) {
-				throw new RuntimeException("引数が数字でない");
+				throw new ArgumentException("real number required: "+tmp);
 			}
 			Number num = (Number)tmp;
 			double number = (num instanceof Int)?((Int)num).getValue():((lisp.eval.Double)num).getValue();
