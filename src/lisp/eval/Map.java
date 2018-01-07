@@ -4,13 +4,22 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * Map
+ * 組み込み手続きmap
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Map implements Subroutine {	
 	private static final Map map = new Map();
 	
+	/**
+	 * Mapのインスタンスを返す
+	 * @return 組み込み手続きMap
+	 */
+	public static Map getInstance() {
+		return map;
+	}
+	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数は必ず2個以上
 		if(!(sexp instanceof ConsCell)) {
@@ -70,10 +79,6 @@ public class Map implements Subroutine {
 			listBuilder.tail(evaled);
 		}
 		return listBuilder.build();
-	}
-	
-	public static Map getInstance() {
-		return map;
 	}
 	
 	@Override
