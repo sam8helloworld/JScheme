@@ -4,13 +4,18 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * <
+ * 数値の大小比較の組み込み手続き
+ * 小なり(<)
  * @author sam0830
- *
+ * @version 1.0
  */
 public class LessThan implements Subroutine {
 	private static final LessThan lessThan = new LessThan();
 	
+	/**
+	 * LessThanのインスタンスを返す
+	 * @return 組み込み手続きLessThan
+	 */
 	public static LessThan getInstance() {
 		return lessThan;
 	}
