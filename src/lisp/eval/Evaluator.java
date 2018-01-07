@@ -5,10 +5,16 @@ import lisp.exception.LispException;
 /**
  * 評価器
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Evaluator {
-	
+	/**
+	 * 組み込み手続きなどで引数のみを予め評価する
+	 * @param sexp 手続きの引数
+	 * @param env 評価時の環境
+	 * @return 評価が終了した引数
+	 * @throws LispException 評価の際、各手続きのapply
+	 */
 	private static SExpression evalArguments(SExpression sexp, Environment env) throws LispException {
 		if(sexp instanceof EmptyList) {
 			return EmptyList.getInstance();
@@ -17,12 +23,13 @@ public class Evaluator {
 		((ConsCell)sexp).setCdr(evalArguments(((ConsCell)sexp).getCdr(), env));
 		return sexp;
 	}
+	
 	/**
 	 * 引数の環境の下で引数のS式を評価する。
 	 * @param sexp S式
 	 * @param env 環境
 	 * @return 評価値(S式)
-	 * @throws LispException 
+	 * @throws LispException 評価の際、各手続きのapply
 	 */
 	public static SExpression eval(SExpression sexp, Environment env) throws LispException { 
 		// sexpが整数(/Int)の時
@@ -55,8 +62,7 @@ public class Evaluator {
 		if(sexp instanceof EmptyList) {
 			return sexp;
 		}
-		
-		
+				
 		//sexpがConsCellの時
 		if(sexp instanceof ConsCell) {
 			/*
