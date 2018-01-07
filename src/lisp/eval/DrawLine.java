@@ -4,13 +4,24 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * DrawLine
+ * draw-lineの組み込み手続き
+ * Canvasから呼ばれる
+ * Canvas上に線分を描画
  * @author sam0830
- *
+ * @version 1.0
  */
 public class DrawLine implements Subroutine {
 	private static final DrawLine drawLine = new DrawLine();
 	
+	/**
+	 * DrawLineのインスタンスを返す
+	 * @return 組み込み手続きDrawLine
+	 */
+	public static DrawLine getInstance() {
+		return drawLine;
+	}
+	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数の型は(Number, Number, Number, Number, Canvas)
 		if(!(sexp instanceof ConsCell)) {
@@ -34,10 +45,6 @@ public class DrawLine implements Subroutine {
 		}
 		((Canvas)canvas).drawLine(elements[0], elements[1], elements[2], elements[3]);
 		return Bool.valueOf(true);
-	}
-	
-	public static DrawLine getInstance() {
-		return drawLine;
 	}
 	
 	@Override
