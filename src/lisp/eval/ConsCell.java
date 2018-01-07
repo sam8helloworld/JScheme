@@ -1,29 +1,56 @@
 package lisp.eval;
 
 /**
- * Cons cell (ドット対)
+ * ConsCell(ドット対)のS式を表す
+ * cdrが空リストの時はリスト
  * @author sam0830
- *
+ * @version 1.0
  */
 public class ConsCell implements SExpression {
 	private SExpression car;
 	private SExpression cdr;
-
+	
+	/**
+	 * getter
+	 * carを返す
+	 * @return carのS式
+	 */
 	public SExpression getCar() {
 		return this.car;
 	}
+	
+	/**
+	 * getter
+	 * cdrを返す
+	 * @return cdrのS式
+	 */
 	public SExpression getCdr() {
 		return this.cdr;
 	}
 	
+	/**
+	 * setter
+	 * carにS式をセットする
+	 * @param sexp セットするS式
+	 */
 	public void setCar(SExpression sexp) {
 		this.car = sexp;
 	}
 	
+	/**
+	 * setter
+	 * cdrにS式をセットする
+	 * @param sexp セットするS式
+	 */
 	public void setCdr(SExpression sexp) {
 		this.cdr = sexp;
 	}
 	
+	/**
+	 * 指定されたインデックスのS式を取得する
+	 * @param n インデックス
+	 * @return 指定されたインデックスのS式
+	 */
 	public SExpression get(int n) {
 		if(n==0) {
 			return this.car;
@@ -34,6 +61,10 @@ public class ConsCell implements SExpression {
 		return ((ConsCell)this.cdr).get(n-1);
 	}
 	
+	/**
+	 * リストのサイズを返す
+	 * @return リストのサイズを表す整数
+	 */
 	public int size() {
 		int size = 0;
 		SExpression sexp = this;
@@ -44,6 +75,10 @@ public class ConsCell implements SExpression {
 		return size;
 	}
 	
+	/**
+	 * ConsCellがリストかどうかを返す
+	 * @return リストかどうかの真理値
+	 */
 	public boolean isList() {
 		SExpression tmp = this;
 		while(tmp instanceof ConsCell) {
@@ -55,10 +90,19 @@ public class ConsCell implements SExpression {
 		return false;
 	}
 	
+	/**
+	 * Cdrのインスタンスを返す
+	 * @return 組み込み手続きCdr
+	 */
 	public static ConsCell getInstance(SExpression car, SExpression cdr) {
 		return new ConsCell(car, cdr);
 	}
 	
+	/**
+	 * ConsCellのコンストラクタ
+	 * @param car carに設定するS式
+	 * @param cdr cdrに設定するS式
+	 */
 	private ConsCell(SExpression car, SExpression cdr) {
 		this.car = car;
 		this.cdr = cdr;
@@ -103,11 +147,20 @@ public class ConsCell implements SExpression {
 		
 	}
 	
-	
+	/**
+	 * ConsCellの中でもリストの作成をするクラス
+	 * @author sam0830
+	 * @version 1.0
+	 */
 	public static class ListBuilder {
 		SExpression head = EmptyList.getInstance();
 		SExpression tail = EmptyList.getInstance();
 		
+	    /**
+	     * リストの先頭にS式を追加する
+	     * @param sexp リストの先頭に追加するS式
+	     * @return 更新済みのListBuilder
+	     */
 		public ListBuilder head(SExpression sexp) {
 			head = ConsCell.getInstance(sexp, head);
 			if(!(tail instanceof ConsCell)) {
@@ -116,6 +169,11 @@ public class ConsCell implements SExpression {
             return this;
         }
 		
+		/**
+		 * リストの末尾にS式を追加する
+	     * @param sexp リストの末尾に追加するS式
+	     * @return 更新済みのListBuilder
+		 */
 		public ListBuilder tail(SExpression sexp) {
 			if(tail instanceof ConsCell) {
 				ConsCell consCell = (ConsCell)tail;
@@ -128,6 +186,11 @@ public class ConsCell implements SExpression {
 			return this;
         }
 		
+		/**
+		 * リストの末尾のcdrにS式を追加する
+		 * @param sexp リストの末尾のcdrに追加するS式
+		 * @return 更新済みのListBuilder
+		 */
 		public ListBuilder last(SExpression sexp) {
             if (tail instanceof ConsCell) {
             	((ConsCell) tail).setCdr(sexp);
@@ -143,6 +206,10 @@ public class ConsCell implements SExpression {
         }
 	}
 	
+	/**
+	 * ListBuilderのインスタンスを返す
+	 * @return ListBuilderのインスタンス
+	 */
 	public static ListBuilder builder() { 
 		return new ListBuilder(); 
 	}
