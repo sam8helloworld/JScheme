@@ -4,16 +4,22 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * display
+ * 組み込み手続きdisplay
+ * 人に読みやすい形式で出力
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Display implements Subroutine {
 	private static final Display display = new Display();
 	
+	/**
+	 * Displayのインスタンスを返す
+	 * @return 組み込み手続きDisplay
+	 */
 	public static Display getInstance() {
 		return display;
 	}
+	
 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		/**
@@ -43,5 +49,4 @@ public class Display implements Subroutine {
 	public String toString() {
 		return "#<subr display>";
 	}
-
 }
