@@ -4,16 +4,22 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * >
+ * 数値の大小比較の組み込み手続き
+ * 大なり(>)
  * @author sam0830
- *
+ * @version 1.0
  */
 public class GreaterThan implements Subroutine {
 	private static final GreaterThan greaterThan = new GreaterThan();
 	
+	/**
+	 * GreaterThanのインスタンスを返す
+	 * @return 組み込み手続きGreaterThan
+	 */
 	public static GreaterThan getInstance() {
 		return greaterThan;
 	}
+	
 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数が2個以上ないとエラー
