@@ -3,9 +3,9 @@ package lisp.eval;
 import lisp.exception.LispException;
 
 /**
- * Number
+ * 数値を表すS式のインタフェース
  * @author sam0830
- *
+ * @version 1.0
  */
 public interface Number extends SExpression{
 	/**
