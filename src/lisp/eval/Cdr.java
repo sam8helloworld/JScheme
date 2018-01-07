@@ -4,12 +4,22 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * Cdr
+ * ConsCellのcdrを取得する組み込み手続き
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Cdr implements Subroutine {
 	private static final Cdr cdr = new Cdr();
+	
+	/**
+	 * Cdrのインスタンスを返す
+	 * @return 組み込み手続きCdr
+	 */
+	public static Cdr getInstance() {
+		return cdr;
+	}
+	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// cdr
 		// ConsCellが渡されなければエラー
@@ -29,11 +39,9 @@ public class Cdr implements Subroutine {
 		}
 		return ((ConsCell)arg).getCdr();
 	}
+	
 	@Override
 	public String toString() {
 		return "<subr cdr>";
-	}
-	public static Cdr getInstance() {
-		return cdr;
 	}
 }
