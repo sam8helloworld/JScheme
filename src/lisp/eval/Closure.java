@@ -4,14 +4,40 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * Closure
+ * ClosureのS式を表す
+ * lamda式の評価結果として生成される
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Closure implements SExpression {	
 	private SExpression body;
 	private SExpression params;
 	
+	/**
+	 * Closureのインスタンスを返す
+	 * @return S式Closure
+	 */
+	public static Closure getInstance(SExpression body, SExpression params) {
+		return new Closure(body, params);
+	} 
+	
+	/**
+	 * Closureのコンストラクタ
+	 * @param body 手続き本体
+	 * @param params 仮引数
+	 */
+	private Closure(SExpression body, SExpression params) {
+		this.body = body;
+		this.params = params;
+	}
+	
+	/**
+	 * 
+	 * @param sexp 引数
+	 * @param environment 実行時の環境
+	 * @return Closureの評価値
+	 * @throws LispException 引数が予期しない型の時
+	 */
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 環境をもうひとつ作成
 		Environment env = new Environment(environment);
@@ -51,16 +77,9 @@ public class Closure implements SExpression {
 		}
 		return Evaluator.eval(this.body, env);
 	}
+	
 	@Override
 	public String toString() {
 		return "#<closure>";
 	}
-	private Closure(SExpression body, SExpression params) {
-		this.body = body;
-		this.params = params;
-	}
-	
-	public static Closure getInstance(SExpression body, SExpression params) {
-		return new Closure(body, params);
-	} 
 }
