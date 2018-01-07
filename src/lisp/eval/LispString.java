@@ -1,21 +1,33 @@
 package lisp.eval;
 
 /**
- * LispString(/文字列)
+ * 文字列を表すS式
  * @author sam0830
- *
+ * @version 1.0
  */
 public class LispString implements SExpression {
 	private String string;
 	
+	/**
+	 * 文字列をString型で取得
+	 * @return 文字列
+	 */
 	public String getString() {
 		return string;
 	}
 	
+	/**
+	 * LispStringのインスタンスを返す
+	 * @return 組み込み手続きLispString
+	 */
 	public static LispString getInstance(String string){
 		return new LispString(string);
 	}
-
+	
+	/**
+	 * LispStringのコンストラクタ
+	 * @param string 文字列
+	 */
 	private LispString(String string) {
 		this.string = string;
 	}
