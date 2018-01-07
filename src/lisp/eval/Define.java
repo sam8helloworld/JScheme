@@ -4,12 +4,22 @@ import lisp.exception.LispException;
 import lisp.exception.SyntaxErrorException;
 
 /**
- * Define
+ * 特殊形式define
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Define implements SpecialForm {
 	private static final Define define = new Define();
+	
+	/**
+	 * Defineのインスタンスを返す
+	 * @return 組み込み手続きDefine
+	 */
+	public static Define getInstance() {
+		return define;
+	}
+	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数が2個ではない時エラー
 		ConsCell.ListBuilder errorListBuilder = ConsCell.builder();
@@ -45,7 +55,8 @@ public class Define implements SpecialForm {
 		return Symbol.getInstance(s1.toString());
 	}
 	
-	public static Define getInstance() {
-		return define;
+	@Override
+	public String toString() {
+		return "#<syntax define>";
 	}
 }
