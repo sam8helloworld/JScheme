@@ -4,13 +4,23 @@ import lisp.exception.LispException;
 import lisp.exception.SyntaxErrorException;
 
 /**
- * Lambda
+ * 特殊形式lambda
+ * 評価されるとClosureを返す
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Lambda implements SpecialForm {
 	private static final Lambda lambda = new Lambda();
-
+	
+	/**
+	 * lambdaのインスタンスを返す
+	 * @return 組み込み手続きLambda
+	 */
+	public static Lambda getInstance() {
+		return lambda;
+	}
+	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		ConsCell.ListBuilder errorListBuilder = ConsCell.builder();
 		errorListBuilder.tail(Symbol.getInstance("lambda"));
@@ -27,9 +37,6 @@ public class Lambda implements SpecialForm {
 		return Closure.getInstance(body, params);
 	}
 
-	public static Lambda getInstance() {
-		return lambda;
-	}
 	@Override 
 	public String toString() {
 		return "#<syntax lambda>";
