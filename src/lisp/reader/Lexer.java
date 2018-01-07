@@ -10,7 +10,7 @@ import lisp.exception.SyntaxErrorException;
 /**
  * 字句解析器
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Lexer {
 	/**

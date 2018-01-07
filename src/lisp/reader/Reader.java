@@ -14,7 +14,7 @@ import lisp.exception.SyntaxErrorException;
 /**
  * 構文解析器
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Reader {
 	/**
@@ -143,6 +143,12 @@ public class Reader {
 		throw new SyntaxErrorException("Invalid expression:" + this.token.getKind());
 	}
 	
+	/**
+	 * 
+	 * @return 構文解析後のS式
+	 * @throws IOException 
+	 * @throws LispException
+	 */
 	public SExpression read() throws IOException, LispException {
 		this.nestingLevel = 0;
 		this.token =  this.lexer.getNextToken();
