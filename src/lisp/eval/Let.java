@@ -4,19 +4,25 @@ import lisp.exception.LispException;
 import lisp.exception.SyntaxErrorException;
 
 /**
- * let
+ * 特殊形式let
+ * 内部的には評価時にlambdaの処理に変換される
  * @author sam0830
  *
  */
-public class Let implements SpecialForm{
+public class Let implements SpecialForm {
 	private static final int BINDS_SIZE = 2;
 	private static final int DAMMY_ARGUMENT_NUMBER = 0;
 	private static final int ACTUAL_ARGUMENT_NUMBER = 1;
 	private static final Let let = new Let();
 	
+	/**
+	 * Letのインスタンスを返す
+	 * @return 組み込み手続きLet
+	 */
 	public static Let getInstance() {
 		return let;
 	}
+	
 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		ConsCell.ListBuilder errorListBuilder = ConsCell.builder();
