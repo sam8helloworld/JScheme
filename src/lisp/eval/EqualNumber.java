@@ -6,11 +6,20 @@ import lisp.exception.LispException;
 /**
  * 数値比較(=)
  * @author sam0830
- *
+ * @version 1.0
  */
 public class EqualNumber implements Subroutine {
 	private static final EqualNumber equalNumber = new EqualNumber();
 	
+	/**
+	 * EqualNumberのインスタンスを返す
+	 * @return 組み込み手続きEqualNumber
+	 */
+	public static EqualNumber getInstance() {
+		return equalNumber;
+	}
+	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException { 
 		// 引数が2つ以上でないときエラー
 		if(!(sexp instanceof ConsCell)) {
@@ -40,7 +49,8 @@ public class EqualNumber implements Subroutine {
 		return Bool.valueOf(true);
 	}
 	
-	public static EqualNumber getInstance() {
-		return equalNumber;
+	@Override
+	public String toString() {
+		return "#<subr =>";
 	}
 }
