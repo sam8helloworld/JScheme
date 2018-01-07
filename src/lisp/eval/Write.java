@@ -1,13 +1,23 @@
 package lisp.eval;
 
 /**
- * Write
+ * 組み込み手続きwrite
+ * 結果を出力する
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Write implements Subroutine {
 	private static final Write write = new Write();
 	
+	/**
+	 * Writeのインスタンスを返す
+	 * @return 組み込み手続きWrite
+	 */
+	public static Write getInstance() {
+		return write;
+	}
+	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) {
 		/**
 		 * 第一引数はS式
@@ -26,7 +36,8 @@ public class Write implements Subroutine {
 		return Undef.getInstance();
 	}
 	
-	public static Write getInstance() {
-		return write;
+	@Override
+	public String toString() {
+		return "#<subr write>";
 	}
 }
