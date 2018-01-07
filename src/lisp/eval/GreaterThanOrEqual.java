@@ -4,16 +4,22 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * >=
+ * 数値の大小比較の組み込み手続き
+ * 大なりイコール(>=)
  * @author sam0830
- *
+ * @version 1.0
  */
 public class GreaterThanOrEqual implements Subroutine {
 	private static final GreaterThanOrEqual greaterThanOrEqual = new GreaterThanOrEqual();
 	
+	/**
+	 * GreaterThanOrEqualのインスタンスを返す
+	 * @return 組み込み手続きGreaterThanOrEqual
+	 */
 	public static GreaterThanOrEqual getInstance() {
 		return greaterThanOrEqual;
 	}
+	
 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数が2個以上ないとエラー
@@ -37,6 +43,7 @@ public class GreaterThanOrEqual implements Subroutine {
 		}
 		return Bool.valueOf(true);
 	}
+	
 	@Override
 	public String toString() {
 		return "#<subr >=>";
