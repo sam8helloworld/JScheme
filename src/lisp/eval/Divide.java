@@ -4,13 +4,22 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * Multiply (乗法)
+ * 除算の組み込み手続き
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Divide implements Subroutine {
- private static final Divide divide = new Divide();
+	private static final Divide divide = new Divide();
 	
+	/**
+	 * Divideのインスタンスを返す
+	 * @return 組み込み手続きDivide
+	 */
+ 	public static Divide getInstance() {
+		return divide;
+	}
+	
+ 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数なし
 		if(sexp instanceof EmptyList) {
@@ -45,10 +54,6 @@ public class Divide implements Subroutine {
 			tmp = ((ConsCell)tmp).getCdr();
 		}
 		return number;
-	}
-	
-	public static Divide getInstance() {
-		return divide;
 	}
 	
 	@Override
