@@ -4,15 +4,21 @@ import lisp.exception.LispException;
 import lisp.exception.SyntaxErrorException;
 
 /**
- * If
+ * 組み込み手続きif
  * @author sam0830
- *
+ * @version 1.0
  */
 public class If implements SpecialForm {
 	private static final If lispIf = new If();
+	
+	/**
+	 * Ifのインスタンスを返す
+	 * @return 組み込み手続きIf
+	 */
 	public static If getInstance() {
 		return lispIf;
 	}
+	
 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		ConsCell.ListBuilder errorListBuilder = ConsCell.builder();
@@ -57,6 +63,7 @@ public class If implements SpecialForm {
 		errorListBuilder.last(sexp);
 		throw new SyntaxErrorException("malformed if: "+errorListBuilder.build().toString());
 	}
+	
 	@Override 
 	public String toString() {
 		return "#<syntax if>";
