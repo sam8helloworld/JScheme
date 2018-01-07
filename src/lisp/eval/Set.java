@@ -4,15 +4,22 @@ import lisp.exception.LispException;
 import lisp.exception.SyntaxErrorException;
 
 /**
- * set!
+ * 特殊形式set!
+ * 束縛済みのシンボルに新たなS式を束縛する
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Set implements SpecialForm {
 	private static final Set set = new Set();
+	
+	/**
+	 * Setのインスタンスを返す
+	 * @return 組み込み手続きSet
+	 */
 	public static Set getInstance() {
 		return set;
 	}
+	
 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 第一引数はSymbol
