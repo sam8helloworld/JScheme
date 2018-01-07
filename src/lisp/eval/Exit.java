@@ -6,11 +6,21 @@ import lisp.exception.LispException;
 
 /**
  * Exit (終了)
+ * エラー処理として終了する
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Exit implements Subroutine {
 	private static final Exit exit = new Exit();
+	
+	/**
+	 * Exitのインスタンスを返す
+	 * @return 組み込み手続きExit
+	 */
+	public static Exit getInstance() {
+		return exit;
+	}
+	
 	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数なしの時
@@ -37,10 +47,5 @@ public class Exit implements Subroutine {
 			throw new EndOfFileException();
 		}
 		throw new ArgumentException("small integer required, but got "+code.toString());
-		
-	}
-	
-	public static Exit getInstance() {
-		return exit;
 	}
 }
