@@ -4,13 +4,23 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * Sub (減法)
+ * 組み込み手続き-
+ * 数値の減法を表す
  * @author sam0830
- *
+ * @version 1.0
  */
-public class Sub implements Subroutine{
+public class Sub implements Subroutine {
 	private static final Sub sub = new Sub();
 	
+	/**
+	 * Subのインスタンスを返す
+	 * @return 組み込み手続きSub
+	 */
+	public static Sub getInstance() {
+		return sub;
+	}
+	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// 引数なし
 		if(sexp instanceof EmptyList) {
@@ -45,10 +55,6 @@ public class Sub implements Subroutine{
 			tmp = ((ConsCell)tmp).getCdr();
 		}
 		return number;
-	}
-	
-	public static Sub getInstance() {
-		return sub;
 	}
 	
 	@Override
