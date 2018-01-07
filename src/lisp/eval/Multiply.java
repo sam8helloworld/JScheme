@@ -3,13 +3,23 @@ package lisp.eval;
 import lisp.exception.ArgumentException;
 
 /**
- * Multiply (乗法)
+ * 組み込み手続きmultiply
+ * 数値の乗算を行う
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Multiply implements Subroutine {
 	private static final Multiply multiply = new Multiply();
 	
+	/**
+	 * Multiplyのインスタンスを返す
+	 * @return 組み込み手続きMultiply
+	 */
+	public static Multiply getInstance() {
+		return multiply;
+	}
+	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws ArgumentException {
 		Number number = Int.valueOf(1);
 		SExpression tmp = sexp;
@@ -23,10 +33,6 @@ public class Multiply implements Subroutine {
 			tmp = ((ConsCell)tmp).getCdr(); 
 		}
 		return number;
-	}
-	
-	public static Multiply getInstance() {
-		return multiply;
 	}
 	
 	@Override
