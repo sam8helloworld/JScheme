@@ -4,12 +4,22 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * Car
+ * ConsCellのcarを取得する組み込み手続き
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Car implements Subroutine {
 	private static final Car car = new Car();
+	
+	/**
+	 * Carのインスタンスを返す
+	 * @return 組み込み手続きCar
+	 */
+	public static Car getInstance() {
+		return car;
+	}
+	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		// car
 		// ConsCellが渡されなければエラー
@@ -28,13 +38,10 @@ public class Car implements Subroutine {
 			throw new ArgumentException("pair required, but got "+arg);
 		}
 		return ((ConsCell)arg).getCar();
-		
 	}
+	
 	@Override
 	public String toString() {
 		return "<subr car>";
-	}
-	public static Car getInstance() {
-		return car;
 	}
 }
