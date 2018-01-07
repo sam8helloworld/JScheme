@@ -36,13 +36,7 @@ public class Double implements SExpression, Number {
 		this.value = value;
 	}
 	
-	/**
-	 * 引数に与えられた数値との加算を行う
-	 * Int同士の場合はIntを返す
-	 * doubleが計算に含まれている場合はDoubleを返す
-	 * @param 加算する数値
-	 * @return 加算後の数値
-	 */
+	@Override
 	public Number add(Number number) {
 		if(number instanceof Int) {
 			return valueOf(value + ((Int)number).getValue());
@@ -50,13 +44,7 @@ public class Double implements SExpression, Number {
 		return valueOf(value + ((lisp.eval.Double)number).getValue());
 	}
 	
-	/**
-	 * 引数に与えられた数値との減算を行う
-	 * Int同士の場合はIntを返す
-	 * doubleが計算に含まれている場合はDoubleを返す
-	 * @param 減算する数値
-	 * @return 減算後の数値
-	 */
+	@Override
 	public Number sub(Number number) {
 		if(number instanceof Int) {
 			return valueOf(value - ((Int)number).getValue());
@@ -64,13 +52,7 @@ public class Double implements SExpression, Number {
 		return valueOf(value - ((lisp.eval.Double)number).getValue());
 	}
 	
-	/**
-	 * 引数に与えられた数値との乗算を行う
-	 * Int同士の場合はIntを返す
-	 * doubleが計算に含まれている場合はDoubleを返す
-	 * @param 乗算する数値
-	 * @return 乗算後の数値
-	 */
+	@Override
 	public Number multiply(Number number) {
 		if(number instanceof Int) {
 			return valueOf(value * ((Int)number).getValue());
@@ -78,13 +60,7 @@ public class Double implements SExpression, Number {
 		return valueOf(value * ((lisp.eval.Double)number).getValue());
 	}
 	
-	/**
-	 * 引数に与えられた数値との除算を行う
-	 * Int同士の場合はIntを返す
-	 * doubleが計算に含まれている場合はDoubleを返す
-	 * @param 除算する数値
-	 * @return 除算後の数値
-	 */
+	@Override
 	public Number divide(Number number) throws LispException {
 		if(number instanceof Int) {
 			if(((Int)number).getValue() == 0) {
@@ -98,49 +74,25 @@ public class Double implements SExpression, Number {
 		return valueOf(value / ((lisp.eval.Double)number).getValue());
 	}
 	
-	/**
-	 * 引数に与えられた数値との大小比較を行う
-	 * 引数で与えられた数値のほうが小さい時true
-	 * 引数で与えられた数値のほうが小さくない時false
-	 * @param 比較対象の数値
-	 * @return 比較結果の真理値
-	 */
+	@Override
 	public boolean lessThan(Number number) {
 		double comparedNumber = (number instanceof Int)?((Int)number).getValue():((lisp.eval.Double)number).getValue();
 		return (value < comparedNumber)?true:false;
 	}
 	
-	/**
-	 * 引数に与えられた数値との大小比較を行う
-	 * 引数で与えられた数値のほうが大きい時true
-	 * 引数で与えられた数値のほうが大きくない時false
-	 * @param 比較対象の数値
-	 * @return 比較結果の真理値
-	 */
+	@Override
 	public boolean greaterThan(Number number) {
 		double comparedNumber = (number instanceof Int)?((Int)number).getValue():((lisp.eval.Double)number).getValue();
 		return (value > comparedNumber)?true:false;
 	}
 	
-	/**
-	 * 引数に与えられた数値との大小比較を行う
-	 * 引数で与えられた数値のほうが数値以下時true
-	 * 引数で与えられた数値のほうが数値以下でない時false
-	 * @param 比較対象の数値
-	 * @return 比較結果の真理値
-	 */
+	@Override
 	public boolean lessThanOrEqual(Number number) {
 		double comparedNumber = (number instanceof Int)?((Int)number).getValue():((lisp.eval.Double)number).getValue();
 		return (value <= comparedNumber)?true:false;
 	}
 	
-	/**
-	 * 引数に与えられた数値との大小比較を行う
-	 * 引数で与えられた数値のほうが数値以上時true
-	 * 引数で与えられた数値のほうが数値以上でない時false
-	 * @param 比較対象の数値
-	 * @return 比較結果の真理値
-	 */
+	@Override
 	public boolean greaterThanOrEqual(Number number) {
 		double comparedNumber = (number instanceof Int)?((Int)number).getValue():((lisp.eval.Double)number).getValue();
 		return (value >= comparedNumber)?true:false;
