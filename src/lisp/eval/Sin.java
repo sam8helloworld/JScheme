@@ -4,13 +4,23 @@ import lisp.exception.ArgumentException;
 import lisp.exception.LispException;
 
 /**
- * Sin
+ * 組み込み手続きsin
+ * 三角関数sin
  * @author sam0830
- *
+ * @version 1.0
  */
 public class Sin implements Subroutine {
 	private static final Sin sin = new Sin();
 	
+	/**
+	 * Sinのインスタンスを返す
+	 * @return 組み込み手続きSin
+	 */
+	public static Sin getInstance() {
+		return sin;
+	}
+	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
 		if(!(sexp instanceof ConsCell)) {
 			throw new ArgumentException("wrong number of arguments for "+this+" (required 1, got 0)");
@@ -26,10 +36,6 @@ public class Sin implements Subroutine {
 		double number = (car instanceof Int)?((Int)car).getValue():((lisp.eval.Double)car).getValue();
 		return lisp.eval.Double.valueOf(Math.sin(Math.toRadians(number)));
 		
-	}
-	
-	public static Sin getInstance() {
-		return sin;
 	}
 	
 	@Override
