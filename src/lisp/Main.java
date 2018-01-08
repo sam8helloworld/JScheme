@@ -40,6 +40,7 @@ import lisp.eval.Quote;
 import lisp.eval.SExpression;
 import lisp.eval.Set;
 import lisp.eval.Sin;
+import lisp.eval.Sleep;
 import lisp.eval.Sub;
 import lisp.eval.Symbol;
 import lisp.eval.Write;
@@ -87,6 +88,7 @@ public class Main {
 		ENVIRONMENT.define(Symbol.getInstance("null?"), AskNull.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("list?"), AskList.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("pair?"), AskPair.getInstance());	
+		ENVIRONMENT.define(Symbol.getInstance("sleep"), Sleep.getInstance());	
 	}
 	
 	// 特殊形式の初期化
@@ -170,6 +172,7 @@ public class Main {
 					System.out.print("lisp> ");
 					SExpression exp = reader.read();
 					SExpression value = Evaluator.eval(exp, ENVIRONMENT);
+					if(value == null) {	continue;}
 					System.out.println(value);
 				} catch (EndOfFileException e) {
 					System.err.println(e.getMessage());
