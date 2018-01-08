@@ -41,6 +41,7 @@ import lisp.eval.SExpression;
 import lisp.eval.Set;
 import lisp.eval.Sin;
 import lisp.eval.Sleep;
+import lisp.eval.Sqrt;
 import lisp.eval.Sub;
 import lisp.eval.Symbol;
 import lisp.eval.Write;
@@ -88,7 +89,8 @@ public class Main {
 		ENVIRONMENT.define(Symbol.getInstance("null?"), AskNull.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("list?"), AskList.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("pair?"), AskPair.getInstance());	
-		ENVIRONMENT.define(Symbol.getInstance("sleep"), Sleep.getInstance());	
+		ENVIRONMENT.define(Symbol.getInstance("sleep"), Sleep.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("sqrt"), Sqrt.getInstance());
 	}
 	
 	// 特殊形式の初期化
