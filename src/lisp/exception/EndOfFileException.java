@@ -12,7 +12,7 @@ public class EndOfFileException extends LispException{
 	 * コンストラクタ
 	 */
 	public EndOfFileException() {
-		super("");
+		super();
 	}
 	
 	/**

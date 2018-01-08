@@ -16,4 +16,12 @@ public class LispException extends Exception {
 	LispException(String msg) {
 		super(PREFIX_MESSAGE+msg);
 	}
+	
+	/**
+	 * コンストラクタ
+	 * エラーメッセージを出力しないエラー
+	 */
+	LispException() {
+		super("");
+	}
 }
