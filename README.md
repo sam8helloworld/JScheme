@@ -31,6 +31,7 @@ Scheme準拠のインタプリタ
 * `pair?`
 * `sin`
 * `sleep`
+* `sqrt`
 * `write`
 
 ### 特殊形式
