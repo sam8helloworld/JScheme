@@ -14,9 +14,6 @@ Scheme準拠のインタプリタ
 * `>`
 * `>=`
 * `append`
-* `list?`
-* `null?`
-* `pair?`
 * `car`
 * `cdr`
 * `cons`
@@ -26,10 +23,14 @@ Scheme準拠のインタプリタ
 * `eq?`
 * `exit`
 * `list`
+* `list?`
 * `make-canvas`
 * `map`
 * `newline`
+* `null?`
+* `pair?`
 * `sin`
+* `sleep`
 * `write`
 
 ### 特殊形式
