@@ -17,6 +17,7 @@ public class Quote implements SpecialForm {
 		return quote;
 	}
 	
+	@Override
 	public SExpression apply(SExpression sexp, Environment environment) {
 		// quote 
 		// 評価せずにそのまま返す
