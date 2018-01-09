@@ -32,16 +32,17 @@ public class If implements SpecialForm {
 		if(((ConsCell)sexp).size() == 3) {
 			SExpression predicate = ((ConsCell)sexp).getCar();
 			SExpression evaled = Evaluator.eval(predicate, environment);
-			if(evaled instanceof Bool) {
-				if(!((Bool)evaled).isValid()) {
-					// else
-					SExpression elseExpression = ((ConsCell)((ConsCell)((ConsCell)((ConsCell)sexp).getCdr())).getCdr()).getCar();
-					return Evaluator.eval(elseExpression, environment);
-				}
+			if(!(evaled instanceof Bool)) {
+				
 			}
-			// then
-			SExpression thenExpression = ((ConsCell)((ConsCell)sexp).getCdr()).getCar();
-			return Evaluator.eval(thenExpression, environment);
+			if(((Bool)evaled).isValid()) {
+				// then
+				SExpression thenExpression = ((ConsCell)((ConsCell)sexp).getCdr()).getCar();
+				return Evaluator.eval(thenExpression, environment);
+			}
+			// else
+			SExpression elseExpression = ((ConsCell)((ConsCell)((ConsCell)((ConsCell)sexp).getCdr())).getCdr()).getCar();
+			return Evaluator.eval(elseExpression, environment);
 		}
 		
 		// 引数が2個ある時(predicate then )

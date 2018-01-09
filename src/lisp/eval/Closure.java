@@ -12,23 +12,26 @@ import lisp.exception.LispException;
 public class Closure implements SExpression {	
 	private SExpression body;
 	private SExpression params;
+	private Environment environment;
 	
 	/**
 	 * Closureのインスタンスを返す
 	 * @return S式Closure
 	 */
-	public static Closure getInstance(SExpression body, SExpression params) {
-		return new Closure(body, params);
+	public static Closure getInstance(SExpression body, SExpression params, Environment env) {
+		return new Closure(body, params, env);
 	} 
 	
 	/**
 	 * Closureのコンストラクタ
 	 * @param body 手続き本体
 	 * @param params 仮引数
+	 * @param env 評価時の環境
 	 */
-	private Closure(SExpression body, SExpression params) {
+	private Closure(SExpression body, SExpression params, Environment env) {
 		this.body = body;
 		this.params = params;
+		this.environment = env;
 	}
 	
 	/**
@@ -38,9 +41,9 @@ public class Closure implements SExpression {
 	 * @return Closureの評価値
 	 * @throws LispException 引数が予期しない型の時
 	 */
-	public SExpression apply(SExpression sexp, Environment environment) throws LispException {
+	public SExpression apply(SExpression sexp, Environment environment) throws LispException {	
 		// 環境をもうひとつ作成
-		Environment env = new Environment(environment);
+		Environment env = new Environment(this.environment);
 		// 実引数と仮引数の個数が対応しているか確認
 		// 仮引数が空リストの時
 		// 仮引数がリストの時
@@ -62,6 +65,7 @@ public class Closure implements SExpression {
 					throw new ArgumentException("symbol required, but got "+symbol);
 				}
 				env.define((Symbol)symbol, ((ConsCell)sexp).get(i));
+				
 			}
 		}
 		if(params instanceof Symbol) {
@@ -74,6 +78,14 @@ public class Closure implements SExpression {
 				sexp = listBuilder.build();
 			}
 			env.define((Symbol)params, sexp);
+		}
+		
+		for(int i=0;i<((ConsCell)this.body).size();i++) {
+			SExpression s = ((ConsCell)this.body).get(i);
+			if(i == ((ConsCell)this.body).size()-1) {
+				return Evaluator.eval(s, env);
+			}
+			Evaluator.eval(s, env);
 		}
 		return Evaluator.eval(this.body, env);
 	}

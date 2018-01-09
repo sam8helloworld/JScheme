@@ -33,7 +33,7 @@ public class Let implements SpecialForm {
 		SExpression binds = ((ConsCell)sexp).getCar();
 		SExpression body = EmptyList.getInstance();
 		if(((ConsCell)sexp).getCdr() instanceof ConsCell) {
-			body = ((ConsCell)sexp).get(1);
+			body = ((ConsCell)sexp).getCdr();
 		}
 		if(!(binds instanceof ConsCell)) {
 			errorListBuilder.last(sexp);
@@ -59,7 +59,7 @@ public class Let implements SpecialForm {
 		ConsCell.ListBuilder lambdaListBuilder = ConsCell.builder();
 		lambdaListBuilder.tail(Symbol.getInstance("lambda"));
 		lambdaListBuilder.tail(dammyArg.build());
-		lambdaListBuilder.tail(body);
+		lambdaListBuilder.last(body);
 		listBuilder.tail(lambdaListBuilder.build());
 		listBuilder.last(actualArg.build());
 		return Evaluator.eval(listBuilder.build(), environment);

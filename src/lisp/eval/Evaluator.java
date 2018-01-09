@@ -19,9 +19,15 @@ public class Evaluator {
 		if(sexp instanceof EmptyList) {
 			return EmptyList.getInstance();
 		}
-		((ConsCell)sexp).setCar(eval(((ConsCell)sexp).getCar(), env));
-		((ConsCell)sexp).setCdr(evalArguments(((ConsCell)sexp).getCdr(), env));
-		return sexp;
+		ConsCell.ListBuilder listBuilder = ConsCell.builder();
+		for(int i=0;i<((ConsCell)sexp).size();i++) {
+			listBuilder.tail(eval(((ConsCell)sexp).get(i), env));
+		}
+		return listBuilder.build();
+//		((ConsCell)sexp).setCar(eval(((ConsCell)sexp).getCar(), env));
+//		((ConsCell)sexp).setCdr(evalArguments(((ConsCell)sexp).getCdr(), env));
+//		
+//		return sexp;
 	}
 	
 	/**
@@ -64,7 +70,7 @@ public class Evaluator {
 		}
 				
 		//sexpがConsCellの時
-		if(sexp instanceof ConsCell) {
+		if(sexp instanceof ConsCell) { 
 			/*
 			 * ConsCellの場合
 			 * (A . B)
@@ -84,7 +90,7 @@ public class Evaluator {
 			
 			// carがクロージャ(/Closure)の時
 			if(car instanceof Closure) {
-				return ((Closure)car).apply(((ConsCell) sexp).getCdr(), env);
+				return ((Closure)car).apply(evalArguments(cdr, env), env);
 			}
 			
 			// 組み込み形式
