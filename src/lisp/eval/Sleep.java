@@ -8,6 +8,7 @@ import lisp.exception.LispException;
 /**
  * 組み込み手続きsleep
  * プログラムの実行を遅らせる
+ * 単位はミリ秒
  * @author sam0830
  * @version 1.0
  */
@@ -41,7 +42,7 @@ public class Sleep implements Subroutine {
 		}
 		try {
 			long duration = (arg instanceof Int)?((Int)arg).getValue().longValue():((lisp.eval.Double)arg).getValue().longValue();
-			TimeUnit.SECONDS.sleep(duration);
+			TimeUnit.MILLISECONDS.sleep(duration);
 		} catch (InterruptedException e) {
             e.printStackTrace();
 		}
