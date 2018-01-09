@@ -24,6 +24,14 @@ public class Environment {
 	}
 	
 	/**
+	 * 自身の環境のフレームを返す
+	 * @return 環境のフレーム
+	 */
+	public Map<Symbol, SExpression> getFrame() {
+		return this.frame;
+	}
+	
+	/**
 	 * どの環境に引数で指定されたシンボルがあるか検索する
 	 * @param environment 検索開始の環境
 	 * @param key 検索キー
@@ -47,7 +55,7 @@ public class Environment {
 	 * @throws LispException 環境にシンボルがない時
 	 */
 	public SExpression get(Symbol key) throws LispException {
-		return find(this, key).frame.get(key);
+		return find(this, key).getFrame().get(key);
 	}
 	
 	/**
@@ -59,8 +67,8 @@ public class Environment {
 	 * @return 束縛済みのS式
 	 * @throws LispException 環境にシンボルがない時
 	 */
-	public SExpression set(Symbol key, SExpression value) throws LispException {
-		find(this, key).frame.put(key, value);
+	public SExpression set(Symbol key, SExpression value) throws LispException { 
+		find(this, key).getFrame().put(key, value);
 		return value;
 	}
 	
