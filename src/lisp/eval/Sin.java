@@ -6,6 +6,7 @@ import lisp.exception.LispException;
 /**
  * 組み込み手続きsin
  * 三角関数sin
+ * 弧度法を使用
  * @author sam0830
  * @version 1.0
  */
@@ -34,7 +35,7 @@ public class Sin implements Subroutine {
 			throw new ArgumentException("number required, but got "+car);
 		}
 		double number = (car instanceof Int)?((Int)car).getValue():((lisp.eval.Double)car).getValue();
-		return lisp.eval.Double.valueOf(Math.sin(Math.toRadians(number)));
+		return lisp.eval.Double.valueOf(Math.sin(number));
 		
 	}
 	

@@ -5,6 +5,7 @@ import lisp.exception.LispException;
 
 /**
  * Cosを計算する組み込み手続き
+ * 弧度法を使用
  * @author sam0830
  * @version 1.0
  */
@@ -33,7 +34,7 @@ public class Cos implements Subroutine {
 			throw new ArgumentException("number required, but got "+car);
 		}
 		double number = (car instanceof Int)?((Int)car).getValue():((lisp.eval.Double)car).getValue();
-		return lisp.eval.Double.valueOf(Math.cos(Math.toRadians(number)));
+		return lisp.eval.Double.valueOf(Math.cos(number));
 		
 	}
 	
