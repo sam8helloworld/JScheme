@@ -48,4 +48,9 @@ public class Exit implements Subroutine {
 		}
 		throw new ArgumentException("small integer required, but got "+code.toString());
 	}
+	
+	@Override
+	public String toString() {
+		return "#<subr exit>";
+	}
 }
