@@ -177,7 +177,7 @@ public class Lexer {
 			StringBuffer stringBuffer = new StringBuffer();
 			updateNextChar();
 			ch = this.nextChar;
-			while(isSymbolChar(ch)){
+			while(true){
 				if(ch == '"') {
 					break;
 				}
