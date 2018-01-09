@@ -8,10 +8,12 @@ import javax.swing.JFrame;
 /**
  * 画面描画用のクラス
  * SwingをUIとして採用している
+ * Windowのリサイズ不可
  * @author sam0830
  * @version 1.0
  */
 public class Canvas extends JFrame implements SExpression {
+	private static final int ADJUST_POSITION = 250;
 	private Rectangle rectangle;
 	
 	/**
@@ -32,6 +34,7 @@ public class Canvas extends JFrame implements SExpression {
 		this.rectangle.setBounds(xPos, yPos, windowWidth, windowHeight);
 		setBounds(this.rectangle);
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		setAlwaysOnTop(true);
 	    setVisible(true);
 	}
@@ -69,6 +72,11 @@ public class Canvas extends JFrame implements SExpression {
 		int y1Pos = (y1 instanceof Int)?((Int)y1).getValue():(((lisp.eval.Double)y1).getValue()).intValue();
 		int x2Pos = (x2 instanceof Int)?((Int)x2).getValue():(((lisp.eval.Double)x2).getValue()).intValue();
 		int y2Pos = (y2 instanceof Int)?((Int)y2).getValue():(((lisp.eval.Double)y2).getValue()).intValue();
+		// 描画位置調整
+		x1Pos += ADJUST_POSITION;
+		y1Pos += ADJUST_POSITION;
+		x2Pos += ADJUST_POSITION;
+		y2Pos += ADJUST_POSITION;
 		Graphics g = this.getGraphics();
 		g.drawLine(x1Pos, y1Pos, x2Pos, y2Pos);
 	}
