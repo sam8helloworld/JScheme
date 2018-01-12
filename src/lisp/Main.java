@@ -177,10 +177,12 @@ public class Main {
 					if(value == null) {	continue;}
 					System.out.println(value);
 				} catch (EndOfFileException e) {
-					System.err.println(e.getMessage());
+					//System.err.println(e.getMessage());
+					System.out.println(e.getMessage());
 					break;
 				} catch (LispException e) {
-					System.err.println(e.getMessage());
+					//System.err.println(e.getMessage());
+					System.out.println(e.getMessage());
 				}
 				
 			}
