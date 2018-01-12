@@ -1,6 +1,7 @@
 package lisp.eval;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 
 import javax.swing.JFrame;
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 public class Canvas extends JFrame implements SExpression {
 	private static final int ADJUST_POSITION = 250;
 	private Rectangle rectangle;
+	private Image imageBuffer;
 	
 	/**
 	 * Canvasのコンストラクタ
@@ -77,13 +79,38 @@ public class Canvas extends JFrame implements SExpression {
 		y1Pos += ADJUST_POSITION;
 		x2Pos += ADJUST_POSITION;
 		y2Pos += ADJUST_POSITION;
-		Graphics g = this.getGraphics();
+		Graphics g = imageBuffer.getGraphics();
 		g.drawLine(x1Pos, y1Pos, x2Pos, y2Pos);
+		repaint(); 
+	}
+	
+	/**
+	 * 引数の x、y、width、height で指定される矩形内に収まる円または楕円が描かれる
+	 * @param x1 始点のx座標
+	 * @param y1 始点のy座標
+	 * @param x2 終点のx座標
+	 * @param y2 終点のy座標
+	 */
+	public void drawOval(Number x1, Number y1, Number x2, Number y2) {
+		int x = (x1 instanceof Int)?((Int)x1).getValue():(((lisp.eval.Double)x1).getValue()).intValue();
+		int y = (y1 instanceof Int)?((Int)y1).getValue():(((lisp.eval.Double)y1).getValue()).intValue();
+		int width = (x2 instanceof Int)?((Int)x2).getValue():(((lisp.eval.Double)x2).getValue()).intValue();
+		int height = (y2 instanceof Int)?((Int)y2).getValue():(((lisp.eval.Double)y2).getValue()).intValue();
+		// 描画位置調整
+		x += ADJUST_POSITION;
+		y += ADJUST_POSITION;
+		Graphics g = this.getGraphics();
+		g.drawOval(x, y, width, height);
+		repaint(); 
 	}
 	
 	@Override
 	public void paint(Graphics g) {
-		super.paint(g);
+		if(imageBuffer == null) {
+			imageBuffer = this.createImage(this.getWidth(),this.getHeight());
+		}
+		g.drawImage(imageBuffer,0,0,this); 
+		//super.paint(g);
 	}
 	
 	@Override

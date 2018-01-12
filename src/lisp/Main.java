@@ -19,6 +19,7 @@ import lisp.eval.Define;
 import lisp.eval.Display;
 import lisp.eval.Divide;
 import lisp.eval.DrawLine;
+import lisp.eval.DrawOval;
 import lisp.eval.Environment;
 import lisp.eval.EqualAddress;
 import lisp.eval.EqualNumber;
@@ -82,6 +83,7 @@ public class Main {
 		ENVIRONMENT.define(Symbol.getInstance("cos"), Cos.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("make-canvas"), MakeCanvas.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("draw-line"), DrawLine.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("draw-oval"), DrawOval.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("<"), LessThan.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance(">"), GreaterThan.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("<="), LessThanOrEqual.getInstance());
