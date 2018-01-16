@@ -12,6 +12,10 @@ import lisp.exception.LispException;
 public class DrawOval implements Subroutine {
 	private static final DrawOval drawOval = new DrawOval();
 	
+	/**
+	 * DrawOvalのインスタンスを返す
+	 * @return 組み込み手続きDrawOval
+	 */
 	public static DrawOval getInstance() {
 		return drawOval;
 	}

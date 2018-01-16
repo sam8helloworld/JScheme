@@ -37,6 +37,7 @@ import lisp.eval.MakeCanvas;
 import lisp.eval.Map;
 import lisp.eval.Multiply;
 import lisp.eval.NewLine;
+import lisp.eval.Not;
 import lisp.eval.Quote;
 import lisp.eval.SExpression;
 import lisp.eval.Set;
@@ -93,6 +94,7 @@ public class Main {
 		ENVIRONMENT.define(Symbol.getInstance("pair?"), AskPair.getInstance());	
 		ENVIRONMENT.define(Symbol.getInstance("sleep"), Sleep.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("sqrt"), Sqrt.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("not"), Not.getInstance());
 	}
 	
 	// 特殊形式の初期化

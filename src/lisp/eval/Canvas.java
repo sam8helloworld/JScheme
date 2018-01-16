@@ -36,8 +36,8 @@ public class Canvas extends JFrame implements SExpression {
 		this.rectangle.setBounds(xPos, yPos, windowWidth, windowHeight);
 		setBounds(this.rectangle);
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
-		setAlwaysOnTop(true);
+		// setResizable(false);
+		// setAlwaysOnTop(true);
 	    setVisible(true);
 	}
 	
