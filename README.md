@@ -20,6 +20,7 @@ Scheme準拠のインタプリタ
 * `cos`
 * `display`
 * `draw-line`
+* `draw-oval`
 * `eq?`
 * `exit`
 * `list`
@@ -27,6 +28,7 @@ Scheme準拠のインタプリタ
 * `make-canvas`
 * `map`
 * `newline`
+* `not`
 * `null?`
 * `pair?`
 * `sin`
