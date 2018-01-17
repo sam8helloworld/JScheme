@@ -43,7 +43,7 @@ public interface Number extends SExpression{
 	 * @return 除算後の数値
 	 */
 	public Number divide(Number number) throws LispException;
-	// TODO:Module
+	
 	/**
 	 * 引数に与えられた数値との大小比較を行う
 	 * 引数で与えられた数値のほうが小さい時true

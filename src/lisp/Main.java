@@ -35,6 +35,7 @@ import lisp.eval.Let;
 import lisp.eval.List;
 import lisp.eval.MakeCanvas;
 import lisp.eval.Map;
+import lisp.eval.Modulo;
 import lisp.eval.Multiply;
 import lisp.eval.NewLine;
 import lisp.eval.Not;
@@ -73,6 +74,7 @@ public class Main {
 		ENVIRONMENT.define(Symbol.getInstance("-"), Sub.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("*"), Multiply.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("/"), Divide.getInstance());
+		ENVIRONMENT.define(Symbol.getInstance("modulo"), Modulo.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("map"), Map.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("="), EqualNumber.getInstance());
 		ENVIRONMENT.define(Symbol.getInstance("eq?"), EqualAddress.getInstance());

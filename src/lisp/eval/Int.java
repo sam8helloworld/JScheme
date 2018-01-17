@@ -36,6 +36,15 @@ public class Int implements SExpression, Number {
 		this.value = value;
 	}
 	
+	/**
+	 * 余りを計算する
+	 * @param number valueを割る数 
+	 * @return valueをnumberで割った余り
+	 */
+	public Number modulo(Number number) {
+		return valueOf(value%((Int)number).getValue());
+	}
+	
 	@Override
 	public Number add(Number number) {
 		if(number instanceof Int) {
