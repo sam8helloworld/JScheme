@@ -27,6 +27,7 @@ Scheme準拠のインタプリタ
 * `list?`
 * `make-canvas`
 * `map`
+* `modulo`
 * `newline`
 * `not`
 * `null?`
