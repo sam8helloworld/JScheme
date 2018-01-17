@@ -50,17 +50,7 @@ public class Map implements Subroutine {
 		
 		ConsCell.ListBuilder listBuilder = ConsCell.builder();
 		
-		// listsの要素数が1個の時
-		int listsSize = ((ConsCell)lists).size();
-		if(listsSize == 1) {
-			listBuilder.tail(proc);
-			SExpression list = ((ConsCell)lists).get(0);
-			for(int i=0;i<((ConsCell)list).size();i++) {
-				listBuilder.tail(((ConsCell)list).get(i));
-			}
-			return Evaluator.eval(listBuilder.build(), environment);
-		}
-				
+		int listsSize = ((ConsCell)lists).size();		
 		for(int elNum=0;elNum<min;elNum++) {
 			ConsCell.ListBuilder listBuilderElement = ConsCell.builder();
 			listBuilderElement.tail(proc);
