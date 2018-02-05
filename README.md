@@ -1,9 +1,9 @@
-# LispInterpreter
-Scheme準拠のインタプリタ  
+# JScheme
 
 ## 説明
+It is a interpreter of Scheme by Java.
 
-### 組み込み手続き
+### Subroutine
 * `+`
 * `-`
 * `*`
@@ -37,7 +37,7 @@ Scheme準拠のインタプリタ
 * `sqrt`
 * `write`
 
-### 特殊形式
+### Syntax-form
 * `define`
 * `if`
 * `lambda`
@@ -45,38 +45,6 @@ Scheme準拠のインタプリタ
 * `quote`
 * `set!`
 
-
-## 使用法
-### インストール
-```sh
-git clone https://github.com/sam0830/LispInterpriter.git
-cd LispInterpreter
-```
-
-### ビルド
-src/lisp内部のファイルをすべてコンパイルする必要がある。
-
-### Run
-```
-java lisp.Main
-```
-
-## Hints
-### Options
-コマンドのオプションとか
-
-### コマンドの実行結果の例
-
-
-## 今後の方針
-使用可能な手続きを増やし、多言語に移植する。
-
-## Contribution
-1. Fork it  
-2. Create your feature branch  
-3. Commit your changes  
-4. Push to the branch  
-5. Create new Pull Request
 
 ## License
 [MIT](LICENSE)
