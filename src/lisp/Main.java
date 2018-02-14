@@ -123,7 +123,7 @@ public class Main {
 		System.out.println("              | |    ");
 		System.out.println("              |_|    ");
 		
-		System.out.println("Welcome to Lisp by sam0830 [version1.0.0] (2017/12/31) <https://github.com/sam0830/LispInterpriter>");
+		System.out.println("Welcome to Lisp by sam0830 [version1.0.0] (2017/12/31) <https://github.com/sam0830/JScheme>");
 		System.out.println("");
 		System.out.println("CopyRight (c) [sam0830] 2017");
 		System.out.println("");
@@ -184,10 +184,12 @@ public class Main {
 					System.out.println(value);
 				} catch (EndOfFileException e) {
 					//System.err.println(e.getMessage());
+					System.out.println("");
 					System.out.println(e.getMessage());
 					break;
 				} catch (LispException e) {
 					//System.err.println(e.getMessage());
+					System.out.println("");
 					System.out.println(e.getMessage());
 				}
 				
